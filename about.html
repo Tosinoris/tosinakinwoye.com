@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Tosin Akinwoye</title>
+<meta name="description" content="Career arc from VFX to AI research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   TOSIN AKINWOYE - Cinematic Portfolio v2
+   ═══════════════════════════════════════════════ */
+:root {
+  --bg:#0a0a0c;--bg-elevated:#111115;--bg-card:#16161a;
+  --text:#e8e6e1;--text-mid:#b0ada5;--text-muted:#6a6860;
+  --accent:#c9a66b;--accent-light:#dfc08e;--accent-dim:rgba(201,166,107,0.12);
+  --accent-glow:rgba(201,166,107,0.05);--red:#a0422e;
+  --border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);
+  --mono:'DM Mono',monospace;--display:'Playfair Display',serif;--body:'Manrope',sans-serif;
+  --page-pad:clamp(1.5rem,4vw,3.5rem);--max-width:1100px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:300;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}a{color:inherit;text-decoration:none}ul{list-style:none}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px 128px}
+
+/* Helpers */
+.label{font-family:var(--mono);font-size:0.65rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent)}
+.section-heading{font-family:var(--display);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;line-height:1.15;margin-bottom:1rem}
+.body-text{font-size:0.95rem;color:var(--text-mid);max-width:600px;line-height:1.8}
+.tag-list{display:flex;flex-wrap:wrap;gap:0.45rem}
+.tag{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;padding:0.32rem 0.7rem;border:1px solid var(--border);border-radius:2px;color:var(--text-muted);transition:border-color 0.3s,color 0.3s}
+.tag:hover{border-color:var(--accent-dim);color:var(--text-mid)}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.7rem 1.6rem;border:1px solid var(--accent);border-radius:2px;color:var(--accent);background:transparent;cursor:pointer;transition:background 0.3s,color 0.3s}
+.btn:hover{background:var(--accent);color:var(--bg)}
+.btn-arrow::after{content:'->'}
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--border),var(--accent-dim),var(--border),transparent)}
+
+/* ── NAV v2 ── */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 var(--page-pad);height:72px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(24px);background:rgba(10,10,12,0.82);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;flex-direction:column;gap:0.1rem;line-height:1.2;transition:opacity 0.3s}
+.nav-logo:hover{opacity:0.8}
+.nav-logo-name{font-family:var(--display);font-size:1.15rem;font-weight:400;letter-spacing:0.06em;color:var(--text)}
+.nav-logo-sub{font-family:var(--mono);font-size:0.48rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted)}
+.nav-links{display:flex;gap:2.2rem}
+.nav-links a{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);position:relative;transition:color 0.3s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer}
+.nav-toggle span{display:block;width:20px;height:1px;background:var(--text-muted);margin:5px 0;transition:0.3s}
+@media(max-width:768px){.nav-toggle{display:block}.nav-links{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;background:rgba(10,10,12,0.96);backdrop-filter:blur(24px);padding:1.5rem var(--page-pad);gap:1.2rem;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}}
+
+/* Footer */
+.site-footer{padding:2.5rem var(--page-pad);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;color:var(--text-muted)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);transition:color 0.3s}
+.footer-links a:hover{color:var(--accent)}
+
+/* Animations */
+.fade-up{opacity:0;transform:translateY(18px);animation:fadeUp 0.7s ease forwards}
+.fade-up-1{animation-delay:0.15s}.fade-up-2{animation-delay:0.3s}.fade-up-3{animation-delay:0.45s}.fade-up-4{animation-delay:0.6s}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Video embed */
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:var(--bg-elevated);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+
+
+.about-hero{padding:9rem var(--page-pad) 3rem;max-width:var(--max-width);margin:0 auto}
+.about-heading{font-family:var(--display);font-size:clamp(2.5rem,5.5vw,4rem);font-weight:400;line-height:1.08;margin-bottom:1.2rem;max-width:650px}
+.about-heading em{font-style:italic;color:var(--accent)}
+.about-intro{font-size:1.05rem;color:var(--text-mid);max-width:540px;line-height:1.85}
+.tl{padding:3rem var(--page-pad);max-width:var(--max-width);margin:0 auto}
+.tl-item{display:grid;grid-template-columns:160px 1px 1fr;gap:2rem;padding-bottom:2.5rem}
+.tl-meta{text-align:right;padding-top:0.2rem}
+.tl-period{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.2rem}
+.tl-role{font-size:0.78rem;color:var(--text-muted)}
+.tl-line{background:linear-gradient(to bottom,var(--accent-dim),var(--border),transparent);position:relative}
+.tl-line::before{content:'';position:absolute;top:6px;left:-3px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.tl-heading{font-family:var(--display);font-size:1.3rem;font-weight:400;margin-bottom:0.4rem;line-height:1.3}
+.tl-body{font-size:0.88rem;color:var(--text-mid);line-height:1.85;max-width:480px}
+.edu-section{padding:3rem var(--page-pad);background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.edu-inner{max-width:var(--max-width);margin:0 auto}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+.edu-card{background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:1.8rem;transition:border-color 0.3s}
+.edu-card:hover{border-color:rgba(201,166,107,0.25)}
+.edu-degree{font-family:var(--display);font-size:1.1rem;margin-bottom:0.3rem}
+.edu-school{font-size:0.82rem;color:var(--text-mid);margin-bottom:0.2rem}
+.edu-year{font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.08em}
+.edu-note{margin-top:0.6rem;font-size:0.78rem;color:var(--text-muted);line-height:1.7}
+.philosophy{padding:3rem var(--page-pad);max-width:var(--max-width);margin:0 auto}
+.philosophy-quote{font-family:var(--display);font-size:clamp(1.2rem,2.2vw,1.7rem);font-style:italic;font-weight:400;line-height:1.5;max-width:650px;margin-bottom:1rem;color:var(--text)}
+.philosophy-text{font-size:0.88rem;color:var(--text-muted);max-width:520px;line-height:1.85}
+@media(max-width:768px){.tl-item{grid-template-columns:1fr;gap:0.3rem}.tl-meta{text-align:left}.tl-line{display:none}.edu-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo"><span class="nav-logo-name">Tosin Akinwoye</span><span class="nav-logo-sub">Visual Effects | AI &amp; ML</span></a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html"class="active">About</a></li>
+    <li><a href="vfx.html">VFX</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="writing.html">Production Diary</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="about-hero">
+  <span class="label fade-up fade-up-1" style="margin-bottom:1.2rem;display:block">About</span>
+  <h1 class="about-heading fade-up fade-up-2">Where VFX<br>meets <em>AI</em></h1>
+  <p class="about-intro fade-up fade-up-3">I started in visual effects - building the simulations, shaders, and pipelines that make impossible things look real on screen. Now I'm applying that same systems thinking to artificial intelligence.</p>
+</header>
+<div class="divider"></div>
+<section class="tl">
+  <div class="tl-item reveal">
+    <div class="tl-meta"><div class="tl-period">2025 - 2026</div><div class="tl-role">Researcher</div></div>
+    <div class="tl-line"></div>
+    <div><h2 class="tl-heading">MSc Artificial Intelligence</h2><p class="tl-body">Northumbria University. Dissertation on scene-aware, feedback-driven video generation using multi-agent planning - a fully algorithmic pipeline bridging VFX scene construction with generative AI.</p></div>
+  </div>
+  <div class="tl-item reveal">
+    <div class="tl-meta"><div class="tl-period">2013 - 2026</div><div class="tl-role">Effects TD</div></div>
+    <div class="tl-line"></div>
+    <div><h2 class="tl-heading">VFX Technical Direction</h2><p class="tl-body">Effects TD on major Hollywood and UK films including Spider-Man, Terminator, Black Widow, Interstellar, and many more. Simulation, pipeline tools, rendering, and technical problem-solving at scale.</p></div>
+  </div>
+  <div class="tl-item reveal">
+    <div class="tl-meta"><div class="tl-period">Bournemouth</div><div class="tl-role">Postgraduate</div></div>
+    <div class="tl-line"></div>
+    <div><h2 class="tl-heading">MA Digital Effects</h2><p class="tl-body">NCCA, Bournemouth University - one of the world's top-ranked VFX programmes. Personal inquiry into Houdini Rigid Body Dynamics.</p></div>
+  </div>
+  <div class="tl-item reveal">
+    <div class="tl-meta"><div class="tl-period">Nigeria</div><div class="tl-role">Foundation</div></div>
+    <div class="tl-line"></div>
+    <div><h2 class="tl-heading">BSc Computer Science</h2><p class="tl-body">The technical bedrock - physics, mathematics, and programming fundamentals. Worked as a motion graphic designer before transitioning into 3D.</p></div>
+  </div>
+</section>
+<section class="edu-section">
+  <div class="edu-inner">
+    <span class="label">Education</span>
+    <div class="edu-grid">
+      <div class="edu-card reveal"><div class="edu-degree">MSc Artificial Intelligence</div><div class="edu-school">Northumbria University</div><div class="edu-year">2025 - 2026</div><div class="edu-note">Multi-agent planning, physics-aware generation, closed-loop evaluation systems.</div></div>
+      <div class="edu-card reveal"><div class="edu-degree">MA Digital Effects</div><div class="edu-school">NCCA, Bournemouth University</div><div class="edu-note">Full VFX pipeline. Personal inquiry: Houdini Rigid Body Dynamics.</div></div>
+    </div>
+  </div>
+</section>
+<section class="philosophy reveal">
+  <p class="philosophy-quote">"The same instinct that makes you build a convincing explosion in Houdini - the obsession with physical plausibility, the layered pipeline, the iterative refinement - is exactly what it takes to build an intelligent generation system."</p>
+  <p class="philosophy-text">This isn't two careers bolted together. It's one way of thinking applied to two fields.</p>
+</section>
+<div class="divider"></div>
+
+<footer class="site-footer">
+  <span class="footer-copy">&copy; 2026 Tosin Akinwoye</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/akinwoyet/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.imdb.com/name/nm6035150/" target="_blank" rel="noopener">IMDb</a>
+  </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+  }
+  const reveals = document.querySelectorAll('.reveal');
+  if (reveals.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }});
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  } else { reveals.forEach(el => el.classList.add('visible')); }
+});
+</script>
+</body>
+</html>
