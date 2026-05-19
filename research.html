@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research - Tosin Akinwoye</title>
+<meta name="description" content="AI research: A Scene-Aware, Feedback-Driven Approach to Intelligent Video Generation Using Multi-Agent Planning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   TOSIN AKINWOYE - Cinematic Portfolio
+   Shared Stylesheet
+   ═══════════════════════════════════════════════ */
+
+/* ── Tokens ── */
+:root {
+  --bg:           #0a0a0c;
+  --bg-elevated:  #111115;
+  --bg-card:      #16161a;
+  --text:         #e8e6e1;
+  --text-mid:     #b0ada5;
+  --text-muted:   #6a6860;
+  --accent:       #c9a66b;
+  --accent-light: #dfc08e;
+  --accent-dim:   rgba(201,166,107,0.12);
+  --accent-glow:  rgba(201,166,107,0.05);
+  --red:          #a0422e;
+  --border:       rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+
+  --mono:    'DM Mono', monospace;
+  --display: 'Playfair Display', serif;
+  --body:    'Manrope', sans-serif;
+
+  --page-pad:  clamp(1.5rem, 4vw, 3.5rem);
+  --max-width: 1100px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ── Film Grain ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* ── Utility ── */
+.wrap  { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--page-pad); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ── Typography helpers ── */
+.label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section-heading {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.body-text {
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+/* ── Tags ── */
+.tag-list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  padding: 0.32rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  transition: border-color 0.3s, color 0.3s;
+}
+.tag:hover { border-color: var(--accent-dim); color: var(--text-mid); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.6rem;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  color: var(--accent);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.btn:hover { background: var(--accent); color: var(--bg); }
+.btn-arrow::after { content: '→'; }
+
+/* ── Dividers ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), var(--accent-dim), var(--border), transparent);
+}
+
+/* ══════════════════════════════════════════════
+   NAVIGATION
+   ══════════════════════════════════════════════ */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 var(--page-pad);
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(24px);
+  background: rgba(10,10,12,0.82);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+.nav-logo:hover { color: var(--text); }
+
+.nav-links { display: flex; gap: 2.2rem; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--accent); }
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* Mobile hamburger */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+.nav-toggle span {
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--text-muted);
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px; left: 0; right: 0;
+    flex-direction: column;
+    background: rgba(10,10,12,0.96);
+    backdrop-filter: blur(24px);
+    padding: 1.5rem var(--page-pad);
+    gap: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════ */
+.site-footer {
+  padding: 2.5rem var(--page-pad);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--accent); }
+
+/* ══════════════════════════════════════════════
+   PAGE ENTRANCE ANIMATION
+   ══════════════════════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.7s ease forwards;
+}
+.fade-up-1 { animation-delay: 0.15s; }
+.fade-up-2 { animation-delay: 0.3s; }
+.fade-up-3 { animation-delay: 0.45s; }
+.fade-up-4 { animation-delay: 0.6s; }
+.fade-up-5 { animation-delay: 0.75s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-triggered reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+<style>
+  /* ── Research Hero ── */
+  .research-hero {
+    padding: 10rem var(--page-pad) 4rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .research-heading {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.08;
+    margin-bottom: 1rem;
+  }
+  .research-heading em { font-style: italic; color: var(--accent); }
+  .research-intro {
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    max-width: 560px;
+    line-height: 1.85;
+  }
+
+  /* ── Dissertation Feature ── */
+  .diss-feature {
+    padding: 5rem var(--page-pad);
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .diss-inner { max-width: var(--max-width); margin: 0 auto; }
+  .diss-meta {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .diss-title {
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 780px;
+    margin-bottom: 1.5rem;
+  }
+  .diss-abstract {
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    max-width: 620px;
+    line-height: 1.85;
+    margin-bottom: 0.8rem;
+  }
+  .diss-supervisor {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+  .diss-key-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  .key-point {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.6rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    color: var(--text-mid);
+  }
+
+  /* ══════════════════════════════════════════════
+     INTERACTIVE PIPELINE
+     ══════════════════════════════════════════════ */
+  .pipeline-section {
+    padding: 5rem var(--page-pad);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .pipeline-section .label { margin-bottom: 1rem; }
+  .pipeline-section .section-heading { margin-bottom: 0.5rem; }
+  .pipeline-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    max-width: 500px;
+  }
+
+  /* Visual pipeline */
+  .pipeline-visual {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding: 1rem 0 2rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pipe-node {
+    flex-shrink: 0;
+    width: 180px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.25s;
+  }
+  .pipe-node:hover { transform: translateY(-4px); }
+
+  .pipe-node-inner {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.3rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .pipe-node:hover .pipe-node-inner,
+  .pipe-node.active .pipe-node-inner {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px var(--accent-glow), inset 0 0 20px var(--accent-glow);
+  }
+
+  .pipe-node-num {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--border);
+    transition: color 0.3s;
+    margin-bottom: 0.6rem;
+  }
+  .pipe-node:hover .pipe-node-num,
+  .pipe-node.active .pipe-node-num { color: var(--accent); }
+
+  .pipe-node-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+    opacity: 0.7;
+  }
+  .pipe-node-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .pipe-node-tech {
+    margin-top: auto;
+    padding-top: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--text-muted);
+  }
+
+  .pipe-connector {
+    flex-shrink: 0;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .pipe-connector::before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+  .pipe-connector::after {
+    content: '›';
+    position: absolute;
+    right: 2px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  /* Feedback loop arrow */
+  .pipe-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    position: relative;
+  }
+  .pipe-feedback::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-dim), var(--accent-dim), transparent);
+  }
+
+  /* ── Expanded detail panel ── */
+  .pipe-detail {
+    margin-top: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, margin-top 0.3s ease, opacity 0.4s ease;
+    opacity: 0;
+  }
+  .pipe-detail.open {
+    max-height: 400px;
+    margin-top: 2rem;
+    opacity: 1;
+  }
+  .pipe-detail-inner {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 2rem 2.5rem;
+  }
+  .pipe-detail-heading {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.6rem;
+  }
+  .pipe-detail-text {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.85;
+    max-width: 580px;
+  }
+  .pipe-detail-tech {
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+
+  /* ══════════════════════════════════════════════
+     DEEP BREAKDOWN
+     ══════════════════════════════════════════════ */
+  .breakdown-section {
+    padding: 5rem var(--page-pad);
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .breakdown-inner { max-width: var(--max-width); margin: 0 auto; }
+  .breakdown-grid {
+    display: grid;
+    gap: 0;
+    margin-top: 2.5rem;
+  }
+  .breakdown-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .breakdown-row:last-child { border-bottom: none; }
+  .bd-num {
+    font-family: var(--display);
+    font-size: 2rem;
+    font-style: italic;
+    color: rgba(201,166,107,0.25);
+  }
+  .bd-content {}
+  .bd-title {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  .bd-text {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    line-height: 1.85;
+    max-width: 560px;
+    margin-bottom: 0.8rem;
+  }
+  .bd-tech-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+  .bd-tech-value {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+  }
+
+  /* ── Future Work ── */
+  .future-section {
+    padding: 5rem var(--page-pad);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .future-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.85;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .pipe-node { width: 150px; }
+    .pipe-connector { width: 24px; }
+    .pipe-detail-inner { padding: 1.5rem; }
+    .breakdown-row { grid-template-columns: 1fr; gap: 0.3rem; }
+    .bd-num { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Tosin Akinwoye</a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="vfx.html">VFX</a></li>
+    <li><a href="research.html" class="active">Research</a></li>
+    <li><a href="writing.html">Writing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header class="research-hero">
+  <span class="label fade-up fade-up-1" style="margin-bottom:1.5rem;display:block;">Research</span>
+  <h1 class="research-heading fade-up fade-up-2">Where pipelines<br>learn to <em>think</em></h1>
+  <p class="research-intro fade-up fade-up-3">Applying a decade of VFX pipeline engineering to artificial intelligence - building systems that plan, generate, evaluate, and refine autonomously.</p>
+</header>
+
+<div class="divider"></div>
+
+<!-- Dissertation Feature -->
+<section class="diss-feature">
+  <div class="diss-inner reveal">
+    <span class="label" style="margin-bottom:1.5rem;display:block;">MSc Dissertation · 2025–26</span>
+    <h2 class="diss-title">"A Scene-Aware, Feedback-Driven Approach to Intelligent Video Generation Using Multi-Agent Planning"</h2>
+    <p class="diss-abstract">This dissertation presents a fully algorithmic, closed-loop pipeline for physics-aware video generation. The system orchestrates multi-agent planning to decompose scenes, constructs 3D environments in Houdini, synthesises video through Wan2.1 I2V, evaluates output against six weighted quality metrics, and adaptively refines - all without human intervention.</p>
+    <p class="diss-abstract">The project demonstrates that the structured, iterative pipeline thinking developed in VFX production translates directly to building intelligent generation systems.</p>
+    <p class="diss-supervisor">Supervised by Dr. Saber Farag · Northumbria University</p>
+    <div class="diss-key-points">
+      <span class="key-point">Fully algorithmic - no human in the loop</span>
+      <span class="key-point">No VLM evaluation (future work)</span>
+      <span class="key-point">Closed-loop adaptive refinement</span>
+      <span class="key-point">Physics-aware 3D scene generation</span>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive Pipeline -->
+<section class="pipeline-section">
+  <span class="label">Pipeline Architecture</span>
+  <h3 class="section-heading">Five-stage closed loop</h3>
+  <p class="pipeline-subtitle">Click any stage to explore. The system runs end-to-end without human intervention.</p>
+
+  <div class="pipeline-visual" id="pipeline">
+    <div class="pipe-node" data-stage="0">
+      <div class="pipe-node-inner">
+        <div class="pipe-node-num">01</div>
+        <div class="pipe-node-label">Planning</div>
+        <div class="pipe-node-name">Multi-Agent Planning</div>
+        <div class="pipe-node-tech">GPT-4o-mini</div>
+      </div>
+    </div>
+    <div class="pipe-connector"></div>
+    <div class="pipe-node" data-stage="1">
+      <div class="pipe-node-inner">
+        <div class="pipe-node-num">02</div>
+        <div class="pipe-node-label">Construction</div>
+        <div class="pipe-node-name">3D Scene Generation</div>
+        <div class="pipe-node-tech">Houdini</div>
+      </div>
+    </div>
+    <div class="pipe-connector"></div>
+    <div class="pipe-node" data-stage="2">
+      <div class="pipe-node-inner">
+        <div class="pipe-node-num">03</div>
+        <div class="pipe-node-label">Synthesis</div>
+        <div class="pipe-node-name">Video Generation</div>
+        <div class="pipe-node-tech">Wan2.1 I2V 14B</div>
+      </div>
+    </div>
+    <div class="pipe-connector"></div>
+    <div class="pipe-node" data-stage="3">
+      <div class="pipe-node-inner">
+        <div class="pipe-node-num">04</div>
+        <div class="pipe-node-label">Assessment</div>
+        <div class="pipe-node-name">Automated Evaluation</div>
+        <div class="pipe-node-tech">6 Weighted Metrics</div>
+      </div>
+    </div>
+    <div class="pipe-connector"></div>
+    <div class="pipe-node" data-stage="4">
+      <div class="pipe-node-inner">
+        <div class="pipe-node-num">05</div>
+        <div class="pipe-node-label">Iteration</div>
+        <div class="pipe-node-name">Adaptive Refinement</div>
+        <div class="pipe-node-tech">Feedback Loop</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-feedback">← Feedback drives re-planning · closed loop →</div>
+
+  <!-- Expandable detail panel -->
+  <div class="pipe-detail" id="pipeDetail">
+    <div class="pipe-detail-inner">
+      <h4 class="pipe-detail-heading" id="detailHeading"></h4>
+      <p class="pipe-detail-text" id="detailText"></p>
+      <div class="pipe-detail-tech" id="detailTech"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Deep Breakdown -->
+<section class="breakdown-section">
+  <div class="breakdown-inner">
+    <span class="label">Detailed Breakdown</span>
+    <div class="breakdown-grid">
+
+      <div class="breakdown-row reveal">
+        <div class="bd-num">01</div>
+        <div class="bd-content">
+          <h4 class="bd-title">Multi-Agent Planning</h4>
+          <p class="bd-text">Multiple GPT-4o-mini agents collaborate to decompose a high-level scene description into structured parameters: object placement, physics properties, camera angles, lighting conditions, and temporal dynamics. Each agent specialises in a different aspect of scene understanding.</p>
+          <div class="bd-tech-label">Technology</div>
+          <div class="bd-tech-value">GPT-4o-mini · Multi-agent orchestration · Structured output</div>
+        </div>
+      </div>
+
+      <div class="breakdown-row reveal">
+        <div class="bd-num">02</div>
+        <div class="bd-content">
+          <h4 class="bd-title">Houdini 3D Scene Generation</h4>
+          <p class="bd-text">The planned scene parameters are translated into a full 3D environment inside Houdini. This is where VFX pipeline expertise becomes critical - procedural geometry, physically-based materials, simulation setups, camera rigs, and render passes are constructed programmatically.</p>
+          <div class="bd-tech-label">Technology</div>
+          <div class="bd-tech-value">Houdini · Procedural modelling · Physics simulation · Python/VEX</div>
+        </div>
+      </div>
+
+      <div class="breakdown-row reveal">
+        <div class="bd-num">03</div>
+        <div class="bd-content">
+          <h4 class="bd-title">Wan2.1 I2V Video Synthesis</h4>
+          <p class="bd-text">Rendered frames from Houdini are fed into the Wan2.1 Image-to-Video 14B model, which synthesises temporally coherent video sequences. The 3D-rendered input provides strong physical priors, giving the generative model a structurally sound foundation to work from.</p>
+          <div class="bd-tech-label">Technology</div>
+          <div class="bd-tech-value">Wan2.1 I2V 14B · Image-to-video diffusion · Temporal coherence</div>
+        </div>
+      </div>
+
+      <div class="breakdown-row reveal">
+        <div class="bd-num">04</div>
+        <div class="bd-content">
+          <h4 class="bd-title">Automated Evaluation</h4>
+          <p class="bd-text">Generated videos are scored against six weighted quality metrics that assess physical plausibility, visual fidelity, temporal consistency, and scene accuracy. This evaluation is entirely algorithmic - no vision-language model (VLM) is used, which is a deliberate scope decision (VLM evaluation is designated as future work).</p>
+          <div class="bd-tech-label">Technology</div>
+          <div class="bd-tech-value">6 weighted metrics · Automated scoring · No VLM</div>
+        </div>
+      </div>
+
+      <div class="breakdown-row reveal">
+        <div class="bd-num">05</div>
+        <div class="bd-content">
+          <h4 class="bd-title">Adaptive Refinement Loop</h4>
+          <p class="bd-text">Evaluation scores feed back into the planning stage, enabling the system to iteratively refine its approach. The loop is closed and autonomous - the system identifies weaknesses in its output and adjusts scene parameters, camera placement, or simulation settings without human direction.</p>
+          <div class="bd-tech-label">Technology</div>
+          <div class="bd-tech-value">Closed-loop feedback · Adaptive re-planning · Score-driven iteration</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Future Work -->
+<section class="future-section reveal">
+  <span class="label">Looking Ahead</span>
+  <p class="future-text" style="margin-top:1.5rem;">Future work includes integrating vision-language model (VLM) evaluation into the assessment stage and introducing human-in-the-loop checkpoints for creative direction. The pipeline is designed to be extensible - each stage can be independently upgraded as models and tools improve.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <span class="footer-copy">© 2026 Tosin Akinwoye</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/akinwoyet/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.imdb.com/name/nm6035150/" target="_blank" rel="noopener">IMDb</a>
+  </div>
+</footer>
+
+<script>
+// ── Mobile nav toggle ──
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-toggle');
+  const links  = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+    });
+    // Close on link click
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => links.classList.remove('open'));
+    });
+  }
+
+  // ── Scroll-reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  if (reveals.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('visible'));
+  }
+});
+</script>
+<script>
+  // ── Interactive Pipeline ──
+  const stageData = [
+    {
+      heading: 'Multi-Agent Planning',
+      text: 'Multiple GPT-4o-mini agents collaborate to decompose a scene description into structured parameters - object placement, physics properties, camera setup, lighting, and temporal dynamics. Each agent handles a specialised aspect of scene understanding, and their outputs are reconciled into a unified scene plan.',
+      tech: 'GPT-4o-mini · Multi-agent orchestration · Structured JSON output'
+    },
+    {
+      heading: 'Houdini 3D Scene Generation',
+      text: 'Planned parameters become a full 3D environment in Houdini. Procedural geometry, physically-based materials, simulation setups, and camera rigs are constructed programmatically. This stage leverages deep VFX pipeline expertise - the same techniques used on feature films, now driven by AI planning rather than human artists.',
+      tech: 'Houdini · Procedural modelling · Physics sim · Python & VEX scripting'
+    },
+    {
+      heading: 'Wan2.1 I2V Video Synthesis',
+      text: 'Rendered frames from Houdini feed into the Wan2.1 Image-to-Video 14B model, producing temporally coherent video. The 3D-rendered input gives the diffusion model strong physical priors - geometry, lighting, depth - resulting in more plausible motion than pure text-to-video approaches.',
+      tech: 'Wan2.1 I2V 14B · Image-to-video diffusion · 14 billion parameters'
+    },
+    {
+      heading: 'Automated Evaluation',
+      text: 'Six weighted quality metrics assess the generated video across dimensions including physical plausibility, visual fidelity, temporal consistency, and scene accuracy. The evaluation is fully algorithmic - no VLM is used. This is a deliberate design choice; VLM evaluation is scoped as future work.',
+      tech: '6 weighted metrics · Algorithmic scoring · No VLM dependency'
+    },
+    {
+      heading: 'Adaptive Refinement Loop',
+      text: 'Evaluation scores flow back to the planning agents, closing the loop. The system identifies specific weaknesses - a failed physics interaction, a lighting mismatch, temporal jitter - and adjusts the scene plan accordingly. No human intervention. The pipeline iterates until quality thresholds are met or iteration limits are reached.',
+      tech: 'Closed-loop feedback · Score-driven re-planning · Autonomous iteration'
+    }
+  ];
+
+  const nodes = document.querySelectorAll('.pipe-node');
+  const detail = document.getElementById('pipeDetail');
+  const detailHeading = document.getElementById('detailHeading');
+  const detailText = document.getElementById('detailText');
+  const detailTech = document.getElementById('detailTech');
+  let activeStage = -1;
+
+  nodes.forEach(node => {
+    node.addEventListener('click', () => {
+      const idx = parseInt(node.dataset.stage);
+
+      // Toggle off if clicking same node
+      if (idx === activeStage) {
+        detail.classList.remove('open');
+        node.classList.remove('active');
+        activeStage = -1;
+        return;
+      }
+
+      // Deactivate previous
+      nodes.forEach(n => n.classList.remove('active'));
+      node.classList.add('active');
+
+      // Populate and open
+      const data = stageData[idx];
+      detailHeading.textContent = data.heading;
+      detailText.textContent = data.text;
+      detailTech.textContent = data.tech;
+      detail.classList.add('open');
+      activeStage = idx;
+    });
+  });
+</script>
+</body>
+</html>

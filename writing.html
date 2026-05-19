@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing - Tosin Akinwoye</title>
+<meta name="description" content="Production diary, VEX snippets, Houdini Python, and technical writing from a VFX TD and AI researcher.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══ INLINE SHARED CSS ═══ */
+:root {
+  --bg:#0a0a0c;--bg-elevated:#111115;--bg-card:#16161a;--text:#e8e6e1;--text-mid:#b0ada5;--text-muted:#6a6860;
+  --accent:#c9a66b;--accent-light:#dfc08e;--accent-dim:rgba(201,166,107,0.12);--accent-glow:rgba(201,166,107,0.05);
+  --red:#a0422e;--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);
+  --mono:'DM Mono',monospace;--display:'Playfair Display',serif;--body:'Manrope',sans-serif;
+  --page-pad:clamp(1.5rem,4vw,3.5rem);--max-width:1100px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:300;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}a{color:inherit;text-decoration:none}ul{list-style:none}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px 128px}
+.label{font-family:var(--mono);font-size:0.65rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent)}
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--border),var(--accent-dim),var(--border),transparent)}
+
+/* Nav */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 var(--page-pad);height:60px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(24px);background:rgba(10,10,12,0.82);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);transition:color 0.3s}.nav-logo:hover{color:var(--text)}
+.nav-links{display:flex;gap:2.2rem}.nav-links a{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);position:relative;transition:color 0.3s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer}.nav-toggle span{display:block;width:20px;height:1px;background:var(--text-muted);margin:5px 0;transition:0.3s}
+@media(max-width:768px){.nav-toggle{display:block}.nav-links{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:rgba(10,10,12,0.96);backdrop-filter:blur(24px);padding:1.5rem var(--page-pad);gap:1.2rem;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}}
+
+/* Footer */
+.site-footer{padding:2.5rem var(--page-pad);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;color:var(--text-muted)}
+.footer-links{display:flex;gap:1.5rem}.footer-links a{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);transition:color 0.3s}.footer-links a:hover{color:var(--accent)}
+
+/* Animations */
+.fade-up{opacity:0;transform:translateY(18px);animation:fadeUp 0.7s ease forwards}
+.fade-up-1{animation-delay:0.15s}.fade-up-2{animation-delay:0.3s}.fade-up-3{animation-delay:0.45s}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══ WRITING PAGE STYLES ═══ */
+.writing-hero{padding:10rem var(--page-pad) 4rem;max-width:var(--max-width);margin:0 auto}
+.writing-heading{font-family:var(--display);font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:400;line-height:1.08;margin-bottom:1rem}
+.writing-heading em{font-style:italic;color:var(--accent)}
+.writing-intro{font-size:1.05rem;color:var(--text-mid);max-width:540px;line-height:1.85}
+
+/* Article index */
+.article-index{padding:3rem var(--page-pad) 5rem;max-width:var(--max-width);margin:0 auto}
+.article-card{display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:2rem 2.5rem;margin-bottom:1rem;transition:border-color 0.3s,transform 0.25s;cursor:pointer}
+.article-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.ac-meta{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:0.5rem}
+.ac-title{font-family:var(--display);font-size:1.3rem;font-weight:400;margin-bottom:0.4rem}
+.ac-desc{font-size:0.85rem;color:var(--text-muted);max-width:500px}
+
+/* Article content */
+.article-section{padding:5rem var(--page-pad);max-width:var(--max-width);margin:0 auto;display:none}
+.article-section.active{display:block}
+.article-section .label{margin-bottom:1.5rem;display:block}
+.article-title{font-family:var(--display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:400;margin-bottom:0.5rem}
+.article-date{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:2rem}
+.article-body{max-width:740px}
+.article-body p{font-size:0.92rem;color:var(--text-mid);line-height:1.85;margin-bottom:1.2rem}
+.article-body strong,.article-body h3{color:var(--text);font-weight:500}
+.article-body h3{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin:2.5rem 0 0.8rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.article-body h3:first-of-type{border-top:none;padding-top:0}
+
+/* Code blocks */
+.article-body pre{background:var(--bg-elevated);border:1px solid var(--border);border-radius:4px;padding:1.2rem 1.5rem;margin:0.8rem 0 1.5rem;overflow-x:auto;font-family:var(--mono);font-size:0.72rem;line-height:1.8;color:var(--accent-light);-webkit-overflow-scrolling:touch}
+.article-body code{font-family:var(--mono);font-size:0.75rem;color:var(--accent-light)}
+
+/* Back button */
+.back-btn{display:inline-flex;align-items:center;gap:0.4rem;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;background:none;border:none;margin-bottom:2rem;transition:gap 0.3s}
+.back-btn:hover{gap:0.7rem}
+.back-btn::before{content:'←'}
+
+@media(max-width:768px){
+  .article-card{padding:1.5rem}
+  .article-body pre{padding:0.8rem 1rem;font-size:0.65rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Tosin Akinwoye</a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="vfx.html">VFX</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="writing.html" class="active">Writing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header class="writing-hero">
+  <span class="label fade-up fade-up-1" style="margin-bottom:1.5rem;display:block;">Production Diary</span>
+  <h1 class="writing-heading fade-up fade-up-2">Notes from<br>the <em>pipeline</em></h1>
+  <p class="writing-intro fade-up fade-up-3">Techniques, tips, and code documented during the course of production work. VEX snippets, Python automation, and FX breakdowns from real film projects.</p>
+</header>
+
+<div class="divider"></div>
+
+<!-- Article Index -->
+<section class="article-index" id="articleIndex">
+  <a class="article-card" onclick="showArticle('vex-snippets')">
+    <div class="ac-meta">January 2017 · VEX · Production Diary</div>
+    <div class="ac-title">Houdini VEX Snippets</div>
+    <div class="ac-desc">50+ production-tested VEX snippets - spirals, point clouds, matrices, volume operations, culling, and more. Bundled as wrangle presets for day-to-day efficiency.</div>
+  </a>
+  <a class="article-card" onclick="showArticle('python-snippets')">
+    <div class="ac-meta">May 2014 · Python · Production Diary</div>
+    <div class="ac-title">Houdini Python Snippets</div>
+    <div class="ac-desc">Python automation for production tasks - batch parameter changes, bundle management, render farm job control, and node graph manipulation.</div>
+  </a>
+  <a class="article-card" onclick="showArticle('pyro-clustering')">
+    <div class="ac-meta">June 2014 · VEX · FX Breakdown</div>
+    <div class="ac-title">Pyro Clustering with VEX</div>
+    <div class="ac-desc">Splitting pyro containers into sub-domains using VEX - a technique used on Jupiter Ascending for simulating and rendering smoke trails at scale.</div>
+  </a>
+  <a class="article-card" onclick="showArticle('crowd-sims')">
+    <div class="ac-meta">October 2018 · VEX · Crowds · RnD</div>
+    <div class="ac-title">A Few Notes on Houdini Crowd Simulations</div>
+    <div class="ac-desc">Production notes on ragdoll setups, bullet solver hybrids, constraint networks, agent attributes, and rotation limit configuration.</div>
+  </a>
+  <a class="article-card" onclick="showArticle('wire-objects')">
+    <div class="ac-meta">September 2017 · VEX · Wire Solver</div>
+    <div class="ac-title">A Few Wire Object Notes</div>
+    <div class="ac-desc">Key attributes for wire simulations - klinear, kangular, damping, targetstiffness - and how to remap them along curves for art-directable results.</div>
+  </a>
+  <a class="article-card" onclick="showArticle('pebbles-dust')">
+    <div class="ac-meta">July 2014 · RnD · FX Breakdown</div>
+    <div class="ac-title">Pebbles and Dust</div>
+    <div class="ac-desc">RBD, pyro, and particle dynamics interoperability in Houdini DOPs - debris library instancing, dust emission, and multi-solver collision strategies.</div>
+  </a>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARTICLE: VEX SNIPPETS
+     ═══════════════════════════════════════════ -->
+<section class="article-section" id="vex-snippets">
+  <button class="back-btn" onclick="showIndex()">All articles</button>
+  <span class="label">Production Diary</span>
+  <h2 class="article-title">Houdini VEX Snippets</h2>
+  <div class="article-date">January 23, 2017</div>
+  <div class="article-body">
+    <p>I typically bundle these snippets as presets in a wrangle node as I get to use most of these functions from day to day. This generally gives me a good head start for similar wrangle tasks and also aids my efficiency.</p>
+
+<h3>Spiral From Line</h3>
+<pre>//SPIRAL FROM LINE
+//CIRCLE OF REFERENCE AND LINE MUST LIE IN THE SAME PLANE
+//(ZX) PLANE IS SUGGESTED
+//RADIUS OF CIRCLE SHOULD IDEALLY BE THE SAME AS LENGTH OF LINE
+//Use uvtexture node to compute uv attrib on points
+//Texture type is set to Row &amp; Columns
+//Get velocity vector along line
+int total = npoints(0)-1; //last point
+int after = total-1;//penultimate point
+int ntm = @ptnum+1;
+vector npos = point(0,"P",ntm);
+v@v = @P-npos;
+//get vel of last point
+if(@ptnum==total){
+ v@v = point(0,"P",after)-point(0,"P",total);
+}
+v@v = normalize(v@v);
+v@up = chv("up");
+v@side = cross(v@v,v@up);
+//Matrices
+matrix3 xform = ident();
+float freq = chf("frequency");
+float angle = @uv.x * freq;
+vector axis = v@up;
+rotate(xform,angle,axis);
+@P*=xform;</pre>
+
+<h3>Limit the Velocity of Crowd Agents</h3>
+<pre>//Modifying the 'v_agent' array vector attribute
+//Use inside a SOP Solver
+vector myvel[] = v[]@v_agent;
+float mult = chf("mult");
+foreach(int i; vector k; myvel)
+{
+    if(length(k)!=0.0)
+    {
+        if(length(k)&gt;chf("max_speed"))
+            continue;
+        else
+            myvel[i] = myvel[i] * mult;
+    }
+}
+v[]@v_agent = myvel;</pre>
+
+<h3>Flow Vector Along Geo (Cross Product)</h3>
+<pre>vector up = set(0,1,0);
+vector side = normalize(v@N);
+vector flew = cross(side,up);
+vector flow = cross(side,flew);
+v@side = flow; //visualize flow vector</pre>
+
+<h3>Attribute Transfer Color from Second Input</h3>
+<pre>int handle = pcopen(@OpInput2, "P", @P, chf("rad"), chi("num"));
+vector lookup_P = pcfilter(handle, "P");
+vector lookup_Cd = pcfilter(handle, "Cd");
+i@many = pcnumfound(handle);
+if(i@many&gt;0){
+     @Cd = lookup_Cd;
+     v@P = lerp(v@P, lookup_P, chf("mix"));
+}</pre>
+
+<h3>Rest Position from (Array) Name Attribute</h3>
+<pre>//Set rest position from array
+//This two part code uses two attrib wrangle nodes
+//It generates an array that contains the name attribs
+//of selected pieces and stores this array attrib on a single point
+
+//Part 1: Store names
+i[]@pts = pcfind(1, "P", @P, chf("rad"), chi("num"));
+string nnme[];
+s[]@nme= nnme;
+string tok;
+foreach(int a;@pts){
+  tok = prim(1,"name",a);
+  push(@nme,tok);
+}
+
+//Part 2: Set rest position
+string names[] = point(1,"nme",0);
+foreach(string nme; names){
+  if(s@name==nme)@P = v@rest;
+}</pre>
+
+<h3>Quaternion Rotate</h3>
+<pre>v@N = set(0,1,0);
+matrix3 xform = ident();
+float amt = chf("amt");
+vector axis = set(chf("axisx"),chf("axisy"),chf("axisz"));
+rotate(xform, amt, axis);
+p@roti = normalize(quaternion(xform));
+v@up= qrotate(p@roti,v@N);
+v@N*=xform;</pre>
+
+<h3>A Random Rotation Matrix</h3>
+<pre>matrix3 myrot = ident();
+float amt = fit(rand(@id+chf("seed")),0,1,chf("minamt"),chf("maxamt"));
+vector axis = sample_direction_uniform(rand(@id));
+rotate(myrot, amt, axis);
+@P*=myrot;</pre>
+
+<h3>Shrink Wrap</h3>
+<pre>int handle = pcopen(@OpInput2, "P", @P, chf("rad"), chi("num"));
+vector lookup_P = pcfilter(handle, "P");
+i@many = pcnumfound(handle);
+if(i@many&gt;=1)v@N = @P-lookup_P;
+else v@N = set(0,0,0);
+@P-=v@N;</pre>
+
+<h3>Cull Based on Ray Direction</h3>
+<pre>int handle = pcopen(@OpInput1, "P", @P, chf("rad"), chi("num"));
+vector up = {0,1,0};
+vector dir,pos;
+float angle;
+i@many = pcnumfound(handle);
+while(pciterate(handle)){
+    if(i@many&gt;1){
+        pcimport(handle,"P",pos);
+        dir = pos - @P;
+        angle = dot(normalize(dir),up);
+        if(angle&gt;chf("mix"))removepoint(geoself(),@ptnum);
+    };
+};
+pcclose(handle);</pre>
+
+<h3>Rotate by Matrix</h3>
+<pre>float xrotamt = radians(chf("xrotamt"));
+float yrotamt = radians(chf("yrotamt"));
+float zrotamt = radians(chf("zrotamt"));
+vector min, max, centroid;
+vector xrotaxis = set(1,0,0);
+vector yrotaxis = set(0,1,0);
+vector zrotaxis = set(0,0,1);
+getbbox(0, min, max);
+centroid = (max + min) * 0.5;
+3@xform = ident();
+rotate(3@xform, xrotamt, xrotaxis);
+rotate(3@xform, yrotamt, yrotaxis);
+rotate(3@xform, zrotamt, zrotaxis);
+v@P -= centroid;
+@P = @P * 3@xform;
+v@P += centroid;</pre>
+
+<h3>Move Points to Surface (SDF)</h3>
+<pre>float vsample = volumesample(1,0,@P);
+vector dirtosurf = volumegradient(1, 0, @P);
+@P -= normalize(dirtosurf) * (vsample - chf("offset"));</pre>
+
+<h3>Quantize Position – Cubify</h3>
+<pre>float ps = chf("scale");
+@P.x = rint(@P.x/ps) * ps;
+@P.y = rint(@P.y/ps) * ps;
+@P.z = rint(@P.z/ps) * ps;</pre>
+
+<h3>Volume Frustrum Cull</h3>
+<pre>vector pndc = toNDC(chs("camera_name"), @P);
+float pad = .2;
+if(pndc.x&lt;0-pad || pndc.x&gt;1+pad || pndc.y&lt;0-pad || pndc.y&gt;1+pad || pndc.z&gt;=0){
+  @density=0;
+}</pre>
+
+<h3>Velocity Along Path</h3>
+<pre>int total = npoints(0)-1;
+int after = total-1;
+int ntm = @ptnum+1;
+vector npos = point(0,"P",ntm);
+v@v = @P-npos;
+if(@ptnum==total){
+ v@v = point(0,"P",after)-point(0,"P",total);
+}</pre>
+
+<h3>Get Centroid</h3>
+<pre>vector min, max;
+getbbox(0, min, max);
+vector centroid = (max + min) * 0.5;</pre>
+
+<h3>Group Roots and Tips of Curves</h3>
+<pre>i@root = (vertexprimindex(0, @vtxnum) == 0);
+i@tip = (vertexprimindex(0, @vtxnum) == (@numvtx-1));
+setpointgroup(0, "roots", @ptnum, @root, "set");
+setpointgroup(0, "tips", @ptnum, @tip, "set");</pre>
+
+<h3>Orient Attribute from Normal</h3>
+<pre>matrix3 m = dihedral({0,0,1},@N);
+@orient = quaternion(m);</pre>
+
+<h3>Simplex Noise on Velocity</h3>
+<pre>v@v *= chf("vel_scale");
+vector freq = chv("freq");
+vector offset = chv("offset");
+float amp = chf("amp");
+vector nn = xnoise(@P * freq + offset);
+nn = fit(nn,{0,0,0},{1,1,1},{-1,-1,-1},{1,1,1});
+nn *= amp;
+v@v += nn;</pre>
+
+<h3>Connect Points</h3>
+<pre>//Run over detail
+int num = npoints(geoself());
+int vtx_limit = num-1;
+for(int i=0;i&lt;vtx_limit;i++){
+    int prim = addprim(0,"polyline");
+    addvertex(0,prim,i);
+    addvertex(0,prim,i+1);
+}</pre>
+
+<h3>Reduce Points</h3>
+<pre>if(rand(@id)&lt;ch("kill"))
+    removepoint(geoself(), @ptnum);</pre>
+
+<h3>Tighten Points</h3>
+<pre>int handle = pcopen(@OpInput1, "P", @P, chf("rad"), chi("num"));
+vector lookUp_P = pcfilter(handle, "P");
+v@P = lerp(v@P, lookUp_P, chf("mix"));</pre>
+
+<h3>Delete Lone Points</h3>
+<pre>int handle = pcopen(@OpInput1, "P", @P, chf("rad"), chi("num"));
+i@many = pcnumfound(handle);
+if(i@many&lt;chi("num"))removepoint(geoself(),@ptnum);</pre>
+
+<h3>Scale by Matrix</h3>
+<pre>vector p = getbbox_center(0);
+float sx, sy, sz;
+sx = sy = sz = chf("scale");
+matrix idan = maketransform(0,0,{0,0,0},{0,0,0},set(sx,sy,sz),{0,0,0});
+@P -= p;
+@P *= idan;
+@P += p;</pre>
+
+<h3>Cull Points Based on Speed</h3>
+<pre>float vlen = length(v@v);
+if(vlen&lt;chf("speed"))removepoint(geoself(),@ptnum);</pre>
+
+<h3>Interpolate Line Into Circle</h3>
+<pre>//Input is a line, resample for more points
+//UV texture SOP as point attrib, rows and columns
+int num = npoints(0);
+vector lineStart = point(0,"P",0);
+vector lineEnd = point(0,"P",num-1);
+vector lineDir = lineStart-lineEnd;
+float l = length(lineDir);
+vector up = set(0,1,0);
+vector side = cross(normalize(lineDir),normalize(up));
+if(dot(up,normalize(lineDir))&lt;0) up=set(1,0,0);
+float t = @uv.x;
+float pivot = chf("pivot");
+float lineLength = length(lineDir);
+float bendFactor = chf("bend_Factor");
+float circleRad = lineLength / (2 * PI);
+vector circleCenter = lineStart + (-lineDir * pivot);
+circleCenter += up * circleRad;
+float angle = PI + bendFactor * (1.0 - (t+pivot)) * 2 * PI;
+vector posOnCircle = circleCenter + set(cos(angle),sin(angle),0) * circleRad;
+@P = lerp(@P, posOnCircle, bendFactor);</pre>
+
+<h3>Look At: Generate Radial Velocities</h3>
+<pre>v@v = set(1,0,1);
+vector pp = getbbox_center(geoself());
+matrix3 mm = lookat(pp,@P);
+@v *= mm;</pre>
+
+<h3>Bend Curve</h3>
+<pre>//Activate curveu attrib in resample SOP
+@curveu = chramp("ramp",@curveu);
+float bamt = chf("bend_amt");
+vector benddir = chv("bend_dir");
+@P += benddir * bamt * @curveu;</pre>
+
+<h3>Median Point Number</h3>
+<pre>int npt = npoints(0);
+if(npt%2==0)
+    i@midpt = (npt/2) -1;
+else
+    i@midpt = (int(ceil(float(npt)/2))) -1;</pre>
+
+<h3>Point Cloud Density</h3>
+<pre>float rad = chf("rad");
+int num = chi("num");
+int handle = pcopen(@OpInput1, "P", @P, rad, num);
+vector lookup_P = pcfilter(handle, "P");
+int many = pcnumfound(handle);
+i@many = many;
+f@viz = float(many)/float(num);
+@Cd = vector(f@viz);</pre>
+
+<h3>Transform by Primitive Intrinsic</h3>
+<pre>matrix xform = primintrinsic(@OpInput2, "packedfulltransform", 0);
+@P *= xform;</pre>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARTICLE: PYTHON SNIPPETS
+     ═══════════════════════════════════════════ -->
+<section class="article-section" id="python-snippets">
+  <button class="back-btn" onclick="showIndex()">All articles</button>
+  <span class="label">Production Diary</span>
+  <h2 class="article-title">Houdini Python Snippets</h2>
+  <div class="article-date">May 4, 2014</div>
+  <div class="article-body">
+    <p>This is an attempt to document and share a few of the Python code that helps in automating several tasks during the course of production.</p>
+
+<h3>Create a Primitive Group for Each Polygon</h3>
+<pre>node = hou.pwd()
+geo = node.geometry()
+for primm in geo.iterPrims():
+   grpName = geo.createPrimGroup('Gurupu_' + str(primm.number()))
+   grpName.add(primm)</pre>
+
+<h3>Set Keyframe Values as Point Attributes</h3>
+<pre>node = hou.node('/obj/CRACK_SIM_7/carve1')
+geo = hou.pwd().geometry()
+parm = node.parm("domainu1")
+firstkey = int(parm.keyframes()[0].frame())
+secondkey = int(parm.keyframes()[1].frame())
+first = geo.addAttrib(hou.attribType.Point, "first", 0)
+second = geo.addAttrib(hou.attribType.Point, "second", 0)
+for pt in geo.points():
+    pt.setAttribValue(first, firstkey)
+    pt.setAttribValue(second, secondkey)</pre>
+
+<h3>Change a Parameter in All Mantra Nodes</h3>
+<pre>parent = hou.node("/obj/ROPS")
+for node in parent.children():
+   node_type_name = node.type().name()
+   if node_type_name == 'mantra':
+      param = node.parm("matte_objects")
+      param.set("endurance render")</pre>
+
+<h3>Pattern-Based Node Operations</h3>
+<pre>parent = hou.node("/obj/ROPS")
+sstring = 'thrusterA'
+temp = 'endurance_render'
+for child in parent.children():
+   if sstring in child.name():
+      param = child.parm("matte_objects")
+      if param is None:
+         pass
+      else:
+         param.set(temp)</pre>
+
+<h3>Remove a Node from a Bundle</h3>
+<pre>node = hou.node('/obj/test')
+bundlename = 'testy'
+for nn in hou.nodeBundles():
+   if nn.name() == bundlename:
+      if nn.containsNode(node):
+         nn.removeNode(node)</pre>
+
+<h3>Replace String Subsets in Parameters</h3>
+<pre>def forceObjects():
+   for node in hou.selectedNodes():
+      param = node.parm("forceobject")
+      searchStr = param.evalAsString()
+      matchStr = "thrusterDelayedBB"
+      replaceStr = "thrusterDelayedBC"
+      if matchStr in searchStr:
+         replStr = searchStr.replace(matchStr, replaceStr)
+         param.set(replStr)
+
+forceObjects()</pre>
+
+<h3>Rename Alfhou Nodes to Ancestor Names</h3>
+<pre>import hou
+for node in hou.selectedNodes():
+   ans = node.inputAncestors()
+   suff = ans[0].name()
+   node.setName("alfhou_" + str(suff))</pre>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARTICLE: PYRO CLUSTERING
+     ═══════════════════════════════════════════ -->
+<section class="article-section" id="pyro-clustering">
+  <button class="back-btn" onclick="showIndex()">All articles</button>
+  <span class="label">FX Breakdown</span>
+  <h2 class="article-title">Pyro Clustering with VEX</h2>
+  <div class="article-date">June 29, 2014</div>
+  <div class="article-body">
+    <p><strong>'Clustering a pyro container'</strong> means splitting the container into a number of sub-domains rather than using one single container. I used this technique while simulating and rendering smoke trails on Jupiter Ascending.</p>
+
+    <p>The logic behind this technique is quite simple and interesting. The basic idea is to have the clustered containers created only once and at specific points during the simulation, then the pyro solver takes care of their auto-resizing/expansion up until the next creation point/frame.</p>
+
+    <p>While working on this in London, I used VOPS to implement the algorithm. However, I tried to understand the logic and re-implemented it in VEX using the point wrangle node.</p>
+
+<h3>Pseudocode</h3>
+<pre>compare present cluster value to the cluster value on the next frame
+if (cluster value at next frame == value at present frame)
+{
+  set the 'deleteme' flag to 1;
+}
+else
+{
+  set the 'deleteme' flag to 0;
+}
+//First frame check:
+if (current frame == first frame)
+  set the 'deleteme' flag to 0;</pre>
+
+<h3>VEX Implementation</h3>
+<pre>float sframe = ch("./sframe");
+float cframe = @Frame;
+int thisCluster, nextCluster;
+
+addattribute("sframe", sframe);
+addattribute("cframe", cframe);
+
+import("cluster", thisCluster, 0, 0);
+import("cluster", nextCluster, 1, 0);
+
+addattribute("this", thisCluster);
+addattribute("next", nextCluster);
+
+if (thisCluster == nextCluster)
+{
+  addattribute("deleteme", 1);
+}
+else
+{
+  addattribute("deleteme", 0);
+}
+
+//First frame check
+if(cframe == sframe)
+  addattribute("deleteme", 0);
+
+addvariablename("deleteme", "DELETEME");</pre>
+
+    <p>In this implementation, I created a custom parameter that represents the first frame. The algorithm compares the cluster attribute value at the current frame to the value at the next frame. If they match, the instance point is flagged for deletion - it's not needed because the container already exists. The first frame is always preserved.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARTICLE: CROWD SIMULATIONS
+     ═══════════════════════════════════════════ -->
+<section class="article-section" id="crowd-sims">
+  <button class="back-btn" onclick="showIndex()">All articles</button>
+  <span class="label">Production Diary · RnD</span>
+  <h2 class="article-title">A Few Notes on Houdini Crowd Simulations</h2>
+  <div class="article-date">October 25, 2018</div>
+  <div class="article-body">
+
+    <p>Ensure your collision layers have a sensible and accurate representation.</p>
+    <p>Ensure your 'agent configure joint' has a sensible and accurate representation of rotation limits.</p>
+    <p>A Ragdoll sim is a crowd solver / bullet solver hybrid with the bullet solver controlling the ragdoll behaviour.</p>
+    <p>The heading and up vectors are used to ensure the initial orientation of the agents. If you have an initial velocity, it overrides the heading.</p>
+
+<h3>Calculate Orient from Normals</h3>
+<pre>matrix3 m = dihedral({0,1,1},@N);
+@orient = quaternion(m);</pre>
+
+<h3>Calculate Heading and Up from Orient</h3>
+<pre>matrix3 rr = qconvert(@orient);
+v@up = set(rr.yx, rr.yy, rr.yz);
+v@heading = set(rr.zx, rr.zy, rr.zz);</pre>
+
+    <p>Agent attributes can directly be modified during a simulation within a SOP solver.</p>
+    <p>Increasing the number of substeps on the bullet solver helps with weird stretching of ragdolls.</p>
+    <p>The Hard Constraint Relationship (usually Pin Constraint) and the Cone Twist Constraint Relationship hybrid is used because rotation limits from Agent Configure Joints set up cone twist constraints. For any transforms where rotation limits were not set (or if there are multiple root collision shapes), pin constraints prevent the ragdoll from immediately separating.</p>
+    <p>Because constraint attributes set in SOPs act as multipliers to the DOP parameters with the same names, a good workflow is to set the DOP parameters to one and set the desired values with the matching SOP attributes.</p>
+    <p>Reducing the "Error Reduction Parameter" on the Hard Constraint Relationship seems to get rid of the undesired stretching of ragdolls.</p>
+
+<h3>Initialize Basic Agent Attributes</h3>
+<pre>vector @v_agent[];
+vector @w_agent[];
+vector v = chv("vel");
+vector w = radians(chv("angvel"));
+int n = agenttransformcount(0, @primnum);
+for (int i = 0; i &lt; n; ++i)
+{
+    append(@v_agent, v);
+    append(@w_agent, w);
+}</pre>
+
+<h3>Primitive Attributes on the Constraint Network</h3>
+<pre>@softness = chf("softness");
+@max_up_rotation = chf("max_up_rotation");
+@max_out_rotation = chf("max_out_rotation");
+@cfm = chf("constraint_force_mixing");
+@bias_factor = chf("bias_factor");
+@relaxation_factor = chf("relaxation_factor");</pre>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARTICLE: WIRE OBJECTS
+     ═══════════════════════════════════════════ -->
+<section class="article-section" id="wire-objects">
+  <button class="back-btn" onclick="showIndex()">All articles</button>
+  <span class="label">Production Diary · RnD</span>
+  <h2 class="article-title">A Few Wire Object Notes</h2>
+  <div class="article-date">September 29, 2017</div>
+  <div class="article-body">
+
+    <p>Visualize the width of the wire object(s) and be sure it's a reasonable size.</p>
+    <p>Wire points must be reasonably spaced apart. Not too many points and not too few points.</p>
+    <p>Some key basic attributes that allow better manipulation of the wire object in SOPs are: width, klinear, damplinear, kangular, dampangular, targetstiffness and targetdamping.</p>
+    <p>Think of the wire object as having two distinct behaviours - stretching (klinear) and bending (kangular). Depending on the material, the wire object can oscillate while stretching (damplinear) and/or oscillate while bending (dampangular).</p>
+    <p>Use a uvtexture node to get a normalized mapping of values (0–1) along the wire object. Set Texture type to 'Rows &amp; Columns' and attribute class to point.</p>
+
+<h3>Remap UV to Attribute</h3>
+<pre>f@f_uv = 1 - @uv.x;
+f@f_uv = chramp("uv_ramp", f@f_uv);</pre>
+
+    <p>If you notice a wiggly behaviour on the wire object, it is most probably because of the oscillating forces. Either the wire is oscillating too much while stretching or bending. Introduce some damping - damplinear or dampangular as the case may be.</p>
+    <p>If you want the wire object to be reluctant to any of the forces, play with the targetstiffness and targetdamping attributes. The wire will then quickly go back to rest. targetstiffness will make the wire reluctant to move from its initial position while targetdamping will make it appear reluctant to oscillate.</p>
+
+<h3>Create Multipliers for Key Wire Attributes</h3>
+<pre>f@klinear = fit(f@f_uv, 0, 1, chf("min_klinear"), chf("max_klinear"));
+f@damplinear = fit(f@f_uv, 0, 1, chf("min_damplinear"), chf("max_damplinear"));
+f@kangular = fit(f@f_uv, 0, 1, chf("min_kangular"), chf("max_kangular"));
+f@dampangular = fit(f@f_uv, 0, 1, chf("min_dampangular"), chf("max_dampangular"));
+f@targetstiffness = fit(f@f_uv, 0, 1, chf("min_targetstiffness"), chf("max_targetstiffness"));
+f@targetdamping = fit(f@f_uv, 0, 1, chf("min_targetdamping"), chf("max_targetdamping"));</pre>
+
+    <p>Remember to substep when needed (also 'Max Collision Resolved Passes' on the wire solver).</p>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARTICLE: PEBBLES AND DUST
+     ═══════════════════════════════════════════ -->
+<section class="article-section" id="pebbles-dust">
+  <button class="back-btn" onclick="showIndex()">All articles</button>
+  <span class="label">RnD · FX Breakdown</span>
+  <h2 class="article-title">Pebbles and Dust</h2>
+  <div class="article-date">July 24, 2014</div>
+  <div class="article-body">
+
+    <p>This RnD demonstrates the use of Rigid Body Dynamics, Computational Fluid Dynamics, Particle Dynamics and their interoperability all within Houdini DOPs.</p>
+
+<h3>Rigid Body Dynamics</h3>
+    <p>My previous RBD simulations suffered from the debris pieces being perfectly flat and polygonal around their surfaces. After generating and caching my initial debris simulation, I used the for-each SOP and the corresponding 'name' attribute to apply a bit of noise (Mountain SOP) and subdivision to the individual debris. This made them look a bit more rocky and less flat/polygonal.</p>
+
+<h3>Smaller Pebbles and the Pebble Library</h3>
+    <p>To add more variation, I took the original debris simulation into a for-each SOP, scaled them down and moved their centroids to the origin. Using the file SOP, I cached about 20 variations to disk, suffixing them with 'opdigits' - pebble1, pebble2, pebble3, etc.</p>
+    <p>These smaller pebbles were then brought back into the RBD simulation with a RBD Point object by adding an instance attribute onto a point cloud:</p>
+<pre>/obj/pebble_library/pebble`trunc(fit(rand($PT),0,1,1,21))`</pre>
+    <p>The point cloud was generated by scattering points in a region for the initial pebble position. The total number of scattered points determines the total number of pebbles in the system.</p>
+
+<h3>Fluid Dynamics: Dust Simulation</h3>
+    <p>The Pyro Solver was used for the dust emitted with the debris. I always prefer using the pyro solver over the smoke solver as it offers more flexibility and controls for the shape and character of simulations.</p>
+    <p>To isolate the source debris (pieces that fell to the ground), I used an expression in the delete SOP: <code>$TY&lt;0.1</code> - selecting only pieces below 0.1 units. The desired pieces are sent into the fluid source SOP and cached.</p>
+    <p>To get dust-like results: pump in just a tiny bit of viscosity and bring down the turbulence significantly. I also keyframed the buoyancy so the smoke begins to rise only when debris has hit the ground surface.</p>
+
+<h3>RBD / Fluid Collisions</h3>
+    <p>For rigid body elements to collide properly with emitted smoke, the simplest/faster approach is to use a merge DOP with its collision property set to 'mutual'. A more precise approach would be generating a collision field from the debris and plugging it into the pyro solver.</p>
+
+<h3>Particle Dynamics</h3>
+    <p>For grit particles interpreted as sand, I used the POP/DOPs interaction with the POP object. Particles were emitted off the RBD debris, inherited part of the debris velocity, and had gravity applied - making them move downward in the direction of the falling pieces.</p>
+
+<h3>Particle / RBD Collision Strategy</h3>
+    <p>Two problems arose when merging the particle stream into the rigid body stream: particles kept sliding on the ground plane, and particle velocity was affected by debris velocity (causing explosions).</p>
+    <p>Fix for sliding: set the static friction value for particles to about 2 on the POP object.</p>
+    <p>Fix for velocity interference - use three merge DOPs:</p>
+<pre>merge 1: particle -&gt; ground plane : collide relationship = mutual
+merge 2: debris -&gt; ground plane : collide relationship = mutual
+merge 3: merge1 -&gt; merge2 : collide relationship = No change</pre>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <span class="footer-copy">© 2026 Tosin Akinwoye</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/akinwoyet/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.imdb.com/name/nm6035150/" target="_blank" rel="noopener">IMDb</a>
+  </div>
+</footer>
+
+<script>
+// Mobile nav
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+  }
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  if (reveals.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }});
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  }
+  // Check hash on load
+  const hash = window.location.hash.replace('#','');
+  if (hash && document.getElementById(hash)) showArticle(hash);
+});
+
+function showArticle(id) {
+  document.getElementById('articleIndex').style.display = 'none';
+  document.querySelectorAll('.article-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  history.pushState(null, '', '#' + id);
+}
+
+function showIndex() {
+  document.querySelectorAll('.article-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('articleIndex').style.display = 'block';
+  window.scrollTo(0, 0);
+  history.pushState(null, '', 'writing.html');
+}
+</script>
+</body>
+</html>

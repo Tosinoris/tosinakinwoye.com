@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Tosin Akinwoye</title>
+<meta name="description" content="Career arc from VFX Technical Direction to AI research. MA Digital Effects from NCCA Bournemouth, MSc Artificial Intelligence from Northumbria University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   TOSIN AKINWOYE - Cinematic Portfolio
+   Shared Stylesheet
+   ═══════════════════════════════════════════════ */
+
+/* ── Tokens ── */
+:root {
+  --bg:           #0a0a0c;
+  --bg-elevated:  #111115;
+  --bg-card:      #16161a;
+  --text:         #e8e6e1;
+  --text-mid:     #b0ada5;
+  --text-muted:   #6a6860;
+  --accent:       #c9a66b;
+  --accent-light: #dfc08e;
+  --accent-dim:   rgba(201,166,107,0.12);
+  --accent-glow:  rgba(201,166,107,0.05);
+  --red:          #a0422e;
+  --border:       rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+
+  --mono:    'DM Mono', monospace;
+  --display: 'Playfair Display', serif;
+  --body:    'Manrope', sans-serif;
+
+  --page-pad:  clamp(1.5rem, 4vw, 3.5rem);
+  --max-width: 1100px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ── Film Grain ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* ── Utility ── */
+.wrap  { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--page-pad); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ── Typography helpers ── */
+.label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section-heading {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.body-text {
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+/* ── Tags ── */
+.tag-list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  padding: 0.32rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  transition: border-color 0.3s, color 0.3s;
+}
+.tag:hover { border-color: var(--accent-dim); color: var(--text-mid); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.6rem;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  color: var(--accent);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.btn:hover { background: var(--accent); color: var(--bg); }
+.btn-arrow::after { content: '→'; }
+
+/* ── Dividers ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), var(--accent-dim), var(--border), transparent);
+}
+
+/* ══════════════════════════════════════════════
+   NAVIGATION
+   ══════════════════════════════════════════════ */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 var(--page-pad);
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(24px);
+  background: rgba(10,10,12,0.82);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+.nav-logo:hover { color: var(--text); }
+
+.nav-links { display: flex; gap: 2.2rem; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--accent); }
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* Mobile hamburger */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+.nav-toggle span {
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--text-muted);
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px; left: 0; right: 0;
+    flex-direction: column;
+    background: rgba(10,10,12,0.96);
+    backdrop-filter: blur(24px);
+    padding: 1.5rem var(--page-pad);
+    gap: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════ */
+.site-footer {
+  padding: 2.5rem var(--page-pad);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--accent); }
+
+/* ══════════════════════════════════════════════
+   PAGE ENTRANCE ANIMATION
+   ══════════════════════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.7s ease forwards;
+}
+.fade-up-1 { animation-delay: 0.15s; }
+.fade-up-2 { animation-delay: 0.3s; }
+.fade-up-3 { animation-delay: 0.45s; }
+.fade-up-4 { animation-delay: 0.6s; }
+.fade-up-5 { animation-delay: 0.75s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-triggered reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+<style>
+  .about-hero {
+    padding: 10rem var(--page-pad) 5rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .about-hero .label { margin-bottom: 1.5rem; }
+  .about-heading {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    max-width: 700px;
+  }
+  .about-heading em { font-style: italic; color: var(--accent); }
+  .about-intro {
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    max-width: 560px;
+    line-height: 1.85;
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    padding: 5rem var(--page-pad);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .tl-section {
+    display: grid;
+    grid-template-columns: 200px 1px 1fr;
+    gap: 2.5rem;
+    padding-bottom: 4rem;
+  }
+  .tl-meta {
+    text-align: right;
+    padding-top: 0.2rem;
+  }
+  .tl-period {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .tl-role-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .tl-line {
+    background: linear-gradient(to bottom, var(--accent-dim), var(--border), transparent);
+    width: 1px;
+    position: relative;
+  }
+  .tl-line::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: -3px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .tl-content {}
+  .tl-heading {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .tl-body {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    line-height: 1.85;
+    max-width: 520px;
+  }
+  .tl-body + .tl-body { margin-top: 0.8rem; }
+
+  /* ── Education cards ── */
+  .edu-section {
+    padding: 5rem var(--page-pad);
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .edu-inner { max-width: var(--max-width); margin: 0 auto; }
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .edu-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.2rem;
+    transition: border-color 0.3s;
+  }
+  .edu-card:hover { border-color: rgba(201,166,107,0.25); }
+  .edu-degree {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+  .edu-school { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 0.3rem; }
+  .edu-year {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  .edu-note {
+    margin-top: 0.8rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── Philosophy ── */
+  .philosophy {
+    padding: 5rem var(--page-pad);
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .philosophy-quote {
+    font-family: var(--display);
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 700px;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+  }
+  .philosophy-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.85;
+  }
+
+  @media (max-width: 768px) {
+    .tl-section { grid-template-columns: 1fr; gap: 0.5rem; }
+    .tl-meta { text-align: left; }
+    .tl-line { display: none; }
+    .edu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">Tosin Akinwoye</a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="vfx.html">VFX</a></li>
+    <li><a href="research.html">Research</a></li>
+    <li><a href="writing.html">Writing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header class="about-hero">
+  <span class="label fade-up fade-up-1">About</span>
+  <h1 class="about-heading fade-up fade-up-2">From blockbusters<br>to <em>breakthroughs</em></h1>
+  <p class="about-intro fade-up fade-up-3">I started in visual effects - building the simulations, shaders, and pipelines that make impossible things look real on screen. Now I'm applying that same systems thinking to artificial intelligence, researching how machines can autonomously generate physically plausible worlds.</p>
+</header>
+
+<div class="divider"></div>
+
+<!-- Timeline -->
+<section class="timeline">
+  <div class="tl-section reveal">
+    <div class="tl-meta">
+      <div class="tl-period">2025 – 2026</div>
+      <div class="tl-role-label">Researcher</div>
+    </div>
+    <div class="tl-line"></div>
+    <div class="tl-content">
+      <h2 class="tl-heading">MSc Artificial Intelligence</h2>
+      <p class="tl-body">Northumbria University. Dissertation on scene-aware, feedback-driven video generation using multi-agent planning - a fully algorithmic pipeline that bridges VFX scene construction with generative AI.</p>
+      <p class="tl-body">Supervised by Dr. Saber Farag. The work demonstrates that the structured, pipeline-oriented thinking developed in VFX translates directly into building intelligent systems.</p>
+    </div>
+  </div>
+
+  <div class="tl-section reveal">
+    <div class="tl-meta">
+      <div class="tl-period">2010s – 2020s</div>
+      <div class="tl-role-label">Effects TD</div>
+    </div>
+    <div class="tl-line"></div>
+    <div class="tl-content">
+      <h2 class="tl-heading">VFX Technical Direction</h2>
+      <p class="tl-body">Effects Technical Director on major Hollywood and UK feature films including Spider-Man: Far From Home, Terminator: Dark Fate, and Black Widow. Responsible for FX simulation, pipeline tools, rendering, and technical problem-solving at scale.</p>
+      <p class="tl-body">Developed deep expertise in Houdini, VEX, Python scripting, rigid body and fluid dynamics, pyro simulation, shader writing, lighting, and compositing.</p>
+    </div>
+  </div>
+
+  <div class="tl-section reveal">
+    <div class="tl-meta">
+      <div class="tl-period">Bournemouth</div>
+      <div class="tl-role-label">Postgraduate</div>
+    </div>
+    <div class="tl-line"></div>
+    <div class="tl-content">
+      <h2 class="tl-heading">MA Digital Effects</h2>
+      <p class="tl-body">National Centre for Computer Animation (NCCA), Bournemouth University - one of the world's top-ranked animation and VFX programmes. Personal inquiry into Houdini Rigid Body Dynamics.</p>
+      <p class="tl-body">Developed a comprehensive foundation across the VFX pipeline: modelling, texturing, rigging, simulation, lighting, rendering, compositing, tracking, and match-moving.</p>
+    </div>
+  </div>
+
+  <div class="tl-section reveal">
+    <div class="tl-meta">
+      <div class="tl-period">Earlier</div>
+      <div class="tl-role-label">Foundation</div>
+    </div>
+    <div class="tl-line"></div>
+    <div class="tl-content">
+      <h2 class="tl-heading">BSc Computer Science</h2>
+      <p class="tl-body">The technical bedrock - physics, mathematics, and programming fundamentals that would later underpin both VFX pipeline development and machine learning research. Worked as a motion graphic designer before transitioning into 3D.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Education cards -->
+<section class="edu-section">
+  <div class="edu-inner">
+    <span class="label">Education</span>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-degree">MSc Artificial Intelligence</div>
+        <div class="edu-school">Northumbria University</div>
+        <div class="edu-year">2025 – 2026</div>
+        <div class="edu-note">Research focus on multi-agent planning, physics-aware generation, and closed-loop evaluation systems.</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-degree">MA Digital Effects</div>
+        <div class="edu-school">NCCA, Bournemouth University</div>
+        <div class="edu-year"></div>
+        <div class="edu-note">Full VFX pipeline training at one of the world's leading programmes. Personal inquiry: Houdini Rigid Body Dynamics.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Philosophy -->
+<section class="philosophy reveal">
+  <p class="philosophy-quote">"The same instinct that makes you build a convincing explosion in Houdini - the obsession with physical plausibility, the layered pipeline, the iterative refinement - is exactly what it takes to build an intelligent generation system."</p>
+  <p class="philosophy-text">This isn't two careers bolted together. It's one way of thinking applied to two fields - and the intersection is where the most interesting work happens.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <span class="footer-copy">© 2026 Tosin Akinwoye</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/akinwoyet/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.imdb.com/name/nm6035150/" target="_blank" rel="noopener">IMDb</a>
+  </div>
+</footer>
+
+<script>
+// ── Mobile nav toggle ──
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-toggle');
+  const links  = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+    });
+    // Close on link click
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => links.classList.remove('open'));
+    });
+  }
+
+  // ── Scroll-reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  if (reveals.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('visible'));
+  }
+});
+</script>
+</body>
+</html>
