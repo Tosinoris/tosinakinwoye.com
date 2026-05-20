@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research - Tosin Akinwoye</title>
+<meta name="description" content="AI research: scene-aware video generation with multi-agent planning.">
+<meta property="og:title" content="Research - Tosin Akinwoye">
+<meta property="og:description" content="AI research: scene-aware video generation with multi-agent planning.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tosinakinwoye.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>/* TOSIN AKINWOYE - Cinematic Portfolio v3 */
+:root {
+  --bg:#1a1917;--bg-elevated:#222120;--bg-card:#2a2928;
+  --text:#ece9e2;--text-mid:#b8b3a8;--text-muted:#7a7568;
+  --accent:#c9a66b;--accent-light:#dfc08e;--accent-dim:rgba(201,166,107,0.12);
+  --accent-glow:rgba(201,166,107,0.05);--border:rgba(255,255,255,0.08);
+  --mono:'DM Mono',monospace;--display:'Playfair Display',serif;--body:'Manrope',sans-serif;
+  --page-pad:clamp(1.5rem,4vw,3.5rem);--max-width:1100px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-weight:300;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}a{color:inherit;text-decoration:none}ul{list-style:none}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px 128px}
+.label{font-family:var(--mono);font-size:0.65rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent)}
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--border),var(--accent-dim),var(--border),transparent)}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.7rem 1.6rem;border:1px solid var(--accent);border-radius:2px;color:var(--accent);background:transparent;cursor:pointer;transition:background 0.3s,color 0.3s}
+.btn:hover{background:var(--accent);color:var(--bg)}
+.btn-arrow::after{content:'->'}
+.tag{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.06em;padding:0.32rem 0.7rem;border:1px solid var(--border);border-radius:2px;color:var(--text-muted)}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:var(--bg-elevated);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+
+/* NAV - 2.5x bigger name */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 var(--page-pad);height:85px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(24px);background:rgba(26,25,23,0.85);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;flex-direction:column;gap:0.15rem;line-height:1.15;transition:opacity 0.3s}
+.nav-logo:hover{opacity:0.8}
+.nav-logo-name{font-family:var(--display);font-size:1.65rem;font-weight:400;letter-spacing:0.04em;color:var(--text)}
+.nav-logo-sub{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted)}
+.nav-links{display:flex;gap:2.2rem}
+.nav-links a{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);position:relative;transition:color 0.3s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer}
+.nav-toggle span{display:block;width:22px;height:1px;background:var(--text-muted);margin:5px 0;transition:0.3s}
+@media(max-width:768px){.nav-toggle{display:block}.nav-links{display:none;position:absolute;top:85px;left:0;right:0;flex-direction:column;background:rgba(26,25,23,0.96);backdrop-filter:blur(24px);padding:1.5rem var(--page-pad);gap:1.2rem;border-bottom:1px solid var(--border)}.nav-links.open{display:flex}.nav-logo-name{font-size:1.3rem}}
+
+/* Footer */
+.site-footer{padding:2.5rem var(--page-pad);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;color:var(--text-muted)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);transition:color 0.3s}
+.footer-links a:hover{color:var(--accent)}
+
+/* Animations */
+.fade-up{opacity:0;transform:translateY(18px);animation:fadeUp 0.7s ease forwards}
+.fade-up-1{animation-delay:0.15s}.fade-up-2{animation-delay:0.3s}.fade-up-3{animation-delay:0.45s}.fade-up-4{animation-delay:0.6s}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+
+.rh{padding:9rem var(--page-pad) 3rem;max-width:var(--max-width);margin:0 auto}
+.rht{font-family:var(--display);font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:400;line-height:1.08;margin-bottom:1rem}.rht em{font-style:italic;color:var(--accent)}
+.ri{font-size:1rem;color:var(--text-mid);max-width:520px;line-height:1.85}
+.ds{padding:3rem var(--page-pad);background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.dsi{max-width:var(--max-width);margin:0 auto}
+.dsm{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.8rem}
+.dst{font-family:var(--display);font-size:clamp(1.2rem,2vw,1.6rem);font-weight:400;font-style:italic;line-height:1.4;max-width:700px;margin-bottom:0.8rem}
+.dsa{font-size:0.88rem;color:var(--text-mid);max-width:580px;line-height:1.85;margin-bottom:0.5rem}
+.dss{font-size:0.75rem;color:var(--text-muted);margin-bottom:1.2rem}
+.kps{display:flex;flex-wrap:wrap;gap:0.5rem}
+.kp{background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:0.4rem 0.7rem;font-family:var(--mono);font-size:0.55rem;color:var(--text-mid)}
+.sec{padding:3rem var(--page-pad);max-width:var(--max-width);margin:0 auto}
+.st{font-family:var(--display);font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:400;margin-bottom:0.3rem}
+.stx{font-size:0.85rem;color:var(--text-mid);line-height:1.85;max-width:560px;margin-bottom:1rem}
+.si{max-width:100%;border:1px solid var(--border);border-radius:4px;margin:1rem 0}
+.vg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.vit{display:flex;flex-direction:column;gap:0.4rem}
+.vl{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase}
+.alt{padding:3rem var(--page-pad);background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%}
+.alti{max-width:var(--max-width);margin:0 auto}
+.bds{margin-top:1.2rem}
+.bdr{display:grid;grid-template-columns:40px 1fr;gap:1.2rem;padding:1.2rem 0;border-bottom:1px solid var(--border)}.bdr:last-child{border-bottom:none}
+.bdn{font-family:var(--display);font-size:1.4rem;font-style:italic;color:rgba(201,166,107,0.25)}
+.bdt{font-family:var(--display);font-size:0.95rem;font-weight:400;margin-bottom:0.2rem}
+.bdtx{font-size:0.78rem;color:var(--text-mid);line-height:1.85;max-width:500px;margin-bottom:0.3rem}
+.bdtc{font-family:var(--mono);font-size:0.55rem;color:var(--accent)}
+.fut{padding:3rem var(--page-pad);max-width:var(--max-width);margin:0 auto}
+.futt{font-size:0.85rem;color:var(--text-muted);max-width:500px;line-height:1.85;margin-top:0.8rem}
+
+/* Theme toggle */
+.theme-toggle{position:fixed;top:95px;right:var(--page-pad);z-index:99;background:var(--bg-elevated);border:1px solid var(--border);border-radius:20px;padding:0.35rem 0.75rem;cursor:pointer;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);transition:all 0.3s;display:flex;align-items:center;gap:0.4rem}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.theme-toggle-icon{font-size:0.8rem;line-height:1}
+
+/* Light theme overrides */
+body.light{--bg:#f7f5f0;--bg-elevated:#ffffff;--bg-card:#ffffff;--text:#1a1917;--text-mid:#4a4840;--text-muted:#8a8578;--accent:#96723b;--accent-light:#7a5a2e;--accent-dim:rgba(150,114,59,0.1);--accent-glow:rgba(150,114,59,0.04);--border:rgba(0,0,0,0.08)}
+body.light .site-nav{background:rgba(247,245,240,0.9)}
+body.light .theme-toggle{background:#f0ede6}
+body.light::after{display:none}
+body.light img.sec-img,body.light img.si{border-color:rgba(0,0,0,0.1)}
+
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo"><span class="nav-logo-name">Tosin Akinwoye</span><span class="nav-logo-sub">Visual Effects | AI &amp; ML</span></a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links"><li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="vfx.html">VFX</a></li>
+    <li><a href="research.html" class="active">Research</a></li>
+    <li><a href="writing.html">Production Diary</a></li>
+    <li><a href="contact.html">Contact</a></li></ul>
+</nav>
+
+<header class="rh">
+  <span class="label fade-up fade-up-1" style="margin-bottom:1rem;display:block">Research</span>
+  <h1 class="rht fade-up fade-up-2">The art of<br><em>intelligent video creation</em></h1>
+  <p class="ri fade-up fade-up-3">Applying a decade of VFX pipeline engineering to AI - building systems that plan, generate, evaluate, and refine autonomously.</p>
+</header>
+<div class="divider"></div>
+<section class="ds"><div class="dsi reveal">
+  <span class="label" style="margin-bottom:0.8rem;display:block">MSc Dissertation - 2025/26</span>
+  <h2 class="dst">"A Scene-Aware, Feedback-Driven Approach to Intelligent Video Generation Using Multi-Agent Planning"</h2>
+  <p class="dsa">A fully algorithmic, closed-loop pipeline for physics-aware video generation. Multi-agent planning decomposes scenes, Houdini constructs 3D environments, Wan2.1 I2V synthesises video, six weighted metrics evaluate quality, and adaptive refinement iterates - all without human intervention.</p>
+  <p class="dss">Supervised by Dr. Saber Farag - Northumbria University</p>
+  <div class="kps"><span class="kp">Fully algorithmic</span><span class="kp">Closed-loop refinement</span><span class="kp">Physics-aware 3D generation</span><span class="kp">Six evaluation metrics</span><span class="kp">No VLM (future work)</span></div>
+</div></section>
+
+<section class="sec reveal">
+  <span class="label" style="margin-bottom:0.8rem;display:block">Overview</span>
+  <h3 class="st">Pipeline Explainer</h3>
+  <p class="stx">A walkthrough of the end-to-end system.</p>
+  <div class="video-wrap"><iframe data-src="https://player.vimeo.com/video/1193749112" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+</section>
+<div class="divider"></div>
+
+<section class="sec reveal">
+  <span class="label" style="margin-bottom:0.8rem;display:block">Layer 1 - Planning</span>
+  <h3 class="st">Multi-Agent Planning</h3>
+  <p class="stx">Three GPT-4o-mini agents - Director, Storyboard, and Cinematographer - collaborate to decompose a scene description into structured parameters via Chain of Thought reasoning and Pydantic outputs.</p>
+  <img src="assets/pipeline-agents.png" alt="Multi-agent planning diagram" class="si">
+</section>
+
+<section class="alt"><div class="alti reveal">
+  <span class="label" style="margin-bottom:0.8rem;display:block">Layer 2 - Construction</span>
+  <h3 class="st">Houdini 3D Scene Construction</h3>
+  <p class="stx">Agent plans become procedural 3D environments in Houdini - geometry, depth maps, collision detection, physics simulation. The same pipeline techniques used on feature films, now driven by AI.</p>
+</div></section>
+
+<section class="sec reveal">
+  <span class="label" style="margin-bottom:0.8rem;display:block">Layer 3 - Generation</span>
+  <h3 class="st">Video Generation - Wan2.1 I2V 14B</h3>
+  <p class="stx">Rendered frames from Houdini feed into Wan2.1 at 624x352, 25 frames, 8fps. Three test scenes evaluated the pipeline across different motion types:</p>
+  <div class="vg">
+    <div class="vit"><div class="vl">Scene 1 - Straight Motion</div><div class="video-wrap"><iframe data-src="https://player.vimeo.com/video/1193747943" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>
+    <div class="vit"><div class="vl">Scene 2 - Curved Motion</div><div class="video-wrap"><iframe data-src="https://player.vimeo.com/video/1193747942" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>
+    <div class="vit"><div class="vl">Scene 3 - Collision Motion</div><div class="video-wrap"><iframe data-src="https://player.vimeo.com/video/1193747944" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<section class="sec reveal">
+  <span class="label" style="margin-bottom:0.8rem;display:block">Layer 4 - Evaluation</span>
+  <h3 class="st">Automated Evaluation</h3>
+  <p class="stx">Six weighted metrics assess physical plausibility, visual fidelity, temporal consistency, and scene accuracy. Entirely algorithmic - no VLM.</p>
+  <img src="assets/metrics-table.png" alt="Six weighted evaluation metrics" class="si">
+</section>
+
+<section class="alt"><div class="alti reveal">
+  <span class="label" style="margin-bottom:0.8rem;display:block">Layer 5 - Refinement</span>
+  <h3 class="st">Adaptive Refinement Loop</h3>
+  <p class="stx">Scores feed back into the system. The pipeline identifies the weakest metric, adjusts a single generation parameter, and iterates until convergence at 0.75. Scene 3 Config B converged at 0.7525 on iteration 3.</p>
+  <img src="assets/refinement-loop.png" alt="Refinement loop flowchart" class="si" style="max-width:480px">
+</div></section>
+
+<section class="alt"><div class="alti">
+  <span class="label">Detailed Breakdown</span>
+  <div class="bds">
+    <div class="bdr reveal"><div class="bdn">01</div><div><div class="bdt">Multi-Agent Planning</div><p class="bdtx">Director, Storyboard, and Cinematographer agents via GPT-4o-mini with CoT reasoning and Pydantic outputs.</p><div class="bdtc">GPT-4o-mini - Structured output - Multi-agent</div></div></div>
+    <div class="bdr reveal"><div class="bdn">02</div><div><div class="bdt">Houdini Scene Generation</div><p class="bdtx">Procedural 3D environments with depth maps, collision geometry, and physics simulation.</p><div class="bdtc">Houdini - Python/VEX - Procedural modelling</div></div></div>
+    <div class="bdr reveal"><div class="bdn">03</div><div><div class="bdt">Wan2.1 I2V Synthesis</div><p class="bdtx">Image-to-video at 624x352, 25 frames, 8fps, 30-step joint inference. 3D-rendered input provides geometry and depth priors.</p><div class="bdtc">Wan2.1 I2V 14B - Diffusion model</div></div></div>
+    <div class="bdr reveal"><div class="bdn">04</div><div><div class="bdt">Six-Metric Evaluation</div><p class="bdtx">SSIM/PSNR, reference sequence similarity, optical flow, Canny edge IoU, flow vectors, centroid path vs Houdini ground truth.</p><div class="bdtc">6 metrics - Total weight 1.00</div></div></div>
+    <div class="bdr reveal"><div class="bdn">05</div><div><div class="bdt">Adaptive Refinement</div><p class="bdtx">Closed-loop feedback adjusts guidance scale, motion bucket, noise augmentation, or seed. Early stopping at 0.75 threshold.</p><div class="bdtc">Autonomous iteration - Score-driven</div></div></div>
+  </div>
+</div></section>
+
+<section class="fut reveal">
+  <span class="label">Future Work</span>
+  <p class="futt">VLM-based semantic evaluation, AnimateDiff with ControlNet, video-to-video refinement, and depth map integration as a direct conditioning signal.</p>
+</section>
+<div class="divider"></div>
+<footer class="site-footer">
+  <span class="footer-copy">&copy; 2026 Tosin Akinwoye</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/akinwoyet/" target="_blank">LinkedIn</a>
+    <a href="https://www.imdb.com/name/nm6035150/" target="_blank">IMDb</a>
+    <a href="https://github.com/tosinoris" target="_blank">GitHub</a>
+  </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const t=document.querySelector('.nav-toggle'),l=document.querySelector('.nav-links');
+  if(t&&l){t.addEventListener('click',()=>l.classList.toggle('open'));l.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>l.classList.remove('open')))}
+  const r=document.querySelectorAll('.reveal');
+  if(r.length&&'IntersectionObserver'in window){const o=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){n.target.classList.add('visible');o.unobserve(n.target)}})},{threshold:0.1});r.forEach(e=>o.observe(e))}else{r.forEach(e=>e.classList.add('visible'))}
+  // Lazy load iframes
+  document.querySelectorAll('iframe[data-src]').forEach(f=>{
+    const o=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){f.src=f.dataset.src;o.unobserve(f)}})},{threshold:0.1});o.observe(f)
+  });
+  // Expand filmography
+  const eb=document.getElementById('expandCredits');
+  if(eb){eb.addEventListener('click',()=>{document.getElementById('fullCredits').style.display='block';eb.style.display='none'})}
+});
+
+// Theme toggle
+(function(){
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch(e){}
+  if(saved === 'light') document.body.classList.add('light');
+  
+  document.addEventListener('DOMContentLoaded', function(){
+    var btn = document.querySelector('.theme-toggle');
+    if(btn){
+      updateIcon();
+      btn.addEventListener('click', function(){
+        document.body.classList.toggle('light');
+        try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch(e){}
+        updateIcon();
+      });
+    }
+    function updateIcon(){
+      var btn = document.querySelector('.theme-toggle');
+      if(!btn) return;
+      var isLight = document.body.classList.contains('light');
+      btn.innerHTML = isLight ? '<span class="theme-toggle-icon">&#9790;</span> Dark' : '<span class="theme-toggle-icon">&#9788;</span> Light';
+    }
+  });
+})();
+
+</script>
+</body>
+</html>
