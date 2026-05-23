@@ -11,7 +11,8 @@
 <meta property="og:url" content="https://tosinakinwoye.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>/* TOSIN AKINWOYE - Cinematic Portfolio v3 */
+<style>
+/* TOSIN AKINWOYE - Cinematic Portfolio v3 */
 :root {
   --bg:#1a1917;--bg-elevated:#222120;--bg-card:#2a2928;
   --text:#ece9e2;--text-mid:#b8b3a8;--text-muted:#7a7568;
@@ -62,20 +63,24 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-
 .vh{padding:9rem var(--page-pad) 3rem;max-width:var(--max-width);margin:0 auto}
 .vht{font-family:var(--display);font-size:clamp(2.5rem,5vw,4rem);font-weight:400;line-height:1.08;margin-bottom:1rem}.vht em{font-style:italic;color:var(--accent)}
 .vi{font-size:1rem;color:var(--text-mid);max-width:500px;line-height:1.85}
 .rs{padding:2rem var(--page-pad) 3rem;max-width:var(--max-width);margin:0 auto}
 .cs{padding:3rem var(--page-pad);background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .ci{max-width:var(--max-width);margin:0 auto}
-.cg{margin-top:1.5rem}
-.crow{display:grid;grid-template-columns:1fr 200px 80px;gap:1rem;padding:0.7rem 0;border-bottom:1px solid var(--border);align-items:baseline;transition:background 0.25s}
-.crow:hover{background:var(--accent-glow)}.crow:last-child{border-bottom:none}
-.cf{font-family:var(--display);font-size:1rem;font-weight:400}
-.crl{font-size:0.75rem;color:var(--text-muted)}.cy{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;color:var(--text-muted);text-align:right}
-.hero-credit{background:var(--bg-card);border:1px solid var(--accent-dim);border-left:3px solid var(--accent)}
-.expand-btn{display:inline-flex;align-items:center;gap:0.4rem;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;background:none;border:1px solid var(--border);border-radius:2px;padding:0.6rem 1.2rem;margin-top:1rem;transition:background 0.3s}
+.poster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin-top:1.5rem}
+.poster-card{position:relative;border-radius:4px;overflow:hidden;background:var(--bg-card);border:1px solid var(--border);transition:transform 0.3s,box-shadow 0.3s;cursor:default;aspect-ratio:2/3}
+.poster-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+.poster-card img{width:100%;height:100%;object-fit:cover}
+.poster-overlay{position:absolute;bottom:0;left:0;right:0;padding:0.8rem;background:linear-gradient(transparent,rgba(0,0,0,0.85));opacity:0;transition:opacity 0.3s}
+.poster-card:hover .poster-overlay{opacity:1}
+.poster-title{font-family:var(--display);font-size:0.8rem;font-weight:400;color:#fff;margin-bottom:0.15rem}
+.poster-role{font-family:var(--mono);font-size:0.5rem;color:rgba(255,255,255,0.6);letter-spacing:0.05em}
+.poster-year{font-family:var(--mono);font-size:0.48rem;color:var(--accent);letter-spacing:0.08em}
+.tmdb-attr{font-family:var(--mono);font-size:0.5rem;color:var(--text-muted);margin-top:1.5rem;text-align:center}
+.tmdb-attr a{color:var(--accent)}
+.expand-btn{display:inline-flex;align-items:center;gap:0.4rem;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;background:none;border:1px solid var(--border);border-radius:2px;padding:0.6rem 1.2rem;margin-top:1.5rem;transition:background 0.3s}
 .expand-btn:hover{background:var(--accent-dim)}
 #fullCredits{display:none}
 .ts{padding:3rem var(--page-pad);max-width:var(--max-width);margin:0 auto}
@@ -85,7 +90,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .tct{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem}
 .tci{font-size:0.78rem;color:var(--text-mid);line-height:1.8}
 .ic{padding:3rem var(--page-pad);text-align:center}.ic p{font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem}
-@media(max-width:768px){.crow{grid-template-columns:1fr;gap:0.15rem}.cy{text-align:left}}
+@media(max-width:768px){.poster-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:0.7rem}.poster-overlay{opacity:1}}
 
 /* Theme toggle */
 .theme-toggle{position:fixed;top:95px;right:var(--page-pad);z-index:99;background:var(--bg-elevated);border:1px solid var(--border);border-radius:20px;padding:0.35rem 0.75rem;cursor:pointer;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);transition:all 0.3s;display:flex;align-items:center;gap:0.4rem}
@@ -98,6 +103,7 @@ body.light .site-nav{background:rgba(247,245,240,0.9)}
 body.light .theme-toggle{background:#f0ede6}
 body.light::after{display:none}
 body.light img.sec-img,body.light img.si{border-color:rgba(0,0,0,0.1)}
+
 
 </style>
 </head>
@@ -113,6 +119,7 @@ body.light img.sec-img,body.light img.si{border-color:rgba(0,0,0,0.1)}
     <li><a href="contact.html">Contact</a></li></ul>
 </nav>
 <button class="theme-toggle"><span class="theme-toggle-icon">&#9788;</span> Light</button>
+
 <header class="vh">
   <span class="label fade-up fade-up-1" style="margin-bottom:1rem;display:block">Visual Effects</span>
   <h1 class="vht fade-up fade-up-2">Making the impossible<br>look <em>real</em></h1>
@@ -120,52 +127,66 @@ body.light img.sec-img,body.light img.si{border-color:rgba(0,0,0,0.1)}
 </header>
 <section class="rs"><div class="video-wrap fade-up fade-up-4"><iframe src="https://player.vimeo.com/video/31044787" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div></section>
 <div class="divider"></div>
+
 <section class="cs"><div class="ci">
-  <span class="label">Key Credits</span>
-  <div class="cg">      <div class="crow hero-credit reveal"><div class="cf">Interstellar</div><div class="crl">FX TD - Double Negative</div><div class="cy">2014</div></div>
-      <div class="crow hero-credit reveal"><div class="cf">Spider-Man: Far From Home</div><div class="crl">FX TD - Image Engine</div><div class="cy">2019</div></div>
-      <div class="crow hero-credit reveal"><div class="cf">Black Widow</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2021</div></div>
-      <div class="crow hero-credit reveal"><div class="cf">Black Panther: Wakanda Forever</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2022</div></div>
-      <div class="crow hero-credit reveal"><div class="cf">Terminator: Dark Fate</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2019</div></div>
-      <div class="crow hero-credit reveal"><div class="cf">Mission Impossible - Dead Reckoning</div><div class="crl">FX TD - Belo FX</div><div class="cy">2023</div></div>
-      <div class="crow hero-credit reveal"><div class="cf">Spider-Man: No Way Home</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2021</div></div>
-      <div class="crow hero-credit reveal"><div class="cf">Thor: Ragnarok</div><div class="crl">FX TD - Image Engine</div><div class="cy">2017</div></div></div>
-  <button class="expand-btn" id="expandCredits">Show full filmography (40+ credits) ↓</button>
-  <div id="fullCredits"><div class="cg" style="margin-top:1rem">      <div class="crow"><div class="cf">Behemoth</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2026</div></div>
-      <div class="crow"><div class="cf">Street Fighter</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2026</div></div>
-      <div class="crow"><div class="cf">Kalki</div><div class="crl">FX TD - Embassy VFX</div><div class="cy">2025</div></div>
-      <div class="crow"><div class="cf">Madame Web</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2024</div></div>
-      <div class="crow"><div class="cf">Avatar: The Last Airbender</div><div class="crl">FX TD - Outpost VFX</div><div class="cy">2023</div></div>
-      <div class="crow"><div class="cf">The Acolyte</div><div class="crl">FX TD - Belo FX</div><div class="cy">2023</div></div>
-      <div class="crow"><div class="cf">My Lady Jane</div><div class="crl">FX TD - Belo FX</div><div class="cy">2023</div></div>
-      <div class="crow"><div class="cf">Fast X</div><div class="crl">FX TD - Belo FX</div><div class="cy">2023</div></div>
-      <div class="crow"><div class="cf">Black Adam</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2022</div></div>
-      <div class="crow"><div class="cf">Morbius</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2022</div></div>
-      <div class="crow"><div class="cf">Shang-Chi</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2021</div></div>
-      <div class="crow"><div class="cf">Lost in Space 3</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2021</div></div>
-      <div class="crow"><div class="cf">Chaos Walking</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2021</div></div>
-      <div class="crow"><div class="cf">The Rescue</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2020</div></div>
-      <div class="crow"><div class="cf">Game Cinematics Project</div><div class="crl">FX TD - Goldtooth Creative</div><div class="cy">2019</div></div>
-      <div class="crow"><div class="cf">John Wick 3</div><div class="crl">FX TD - Image Engine</div><div class="cy">2019</div></div>
-      <div class="crow"><div class="cf">Kingdom Hearts 3</div><div class="crl">FX TD - Image Engine</div><div class="cy">2019</div></div>
-      <div class="crow"><div class="cf">Hotel Transylvania 3</div><div class="crl">FX TD - Sony Imageworks</div><div class="cy">2018</div></div>
-      <div class="crow"><div class="cf">Spider-Man: Homecoming</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2017</div></div>
-      <div class="crow"><div class="cf">Fast and Furious 8</div><div class="crl">FX TD - Digital Domain</div><div class="cy">2017</div></div>
-      <div class="crow"><div class="cf">Fantastic Beasts</div><div class="crl">FX TD - Double Negative</div><div class="cy">2016</div></div>
-      <div class="crow"><div class="cf">Star Trek Beyond</div><div class="crl">FX TD - Double Negative</div><div class="cy">2016</div></div>
-      <div class="crow"><div class="cf">The Huntsman: Winter's War</div><div class="crl">FX TD - Double Negative</div><div class="cy">2016</div></div>
-      <div class="crow"><div class="cf">Alice Through the Looking Glass</div><div class="crl">FX TD - Double Negative</div><div class="cy">2016</div></div>
-      <div class="crow"><div class="cf">Pan</div><div class="crl">FX TD - MPC</div><div class="cy">2015</div></div>
-      <div class="crow"><div class="cf">Goosebumps</div><div class="crl">FX TD - MPC</div><div class="cy">2015</div></div>
-      <div class="crow"><div class="cf">Jupiter Ascending</div><div class="crl">FX TD - Double Negative</div><div class="cy">2015</div></div>
-      <div class="crow"><div class="cf">Godzilla</div><div class="crl">FX TD - Double Negative</div><div class="cy">2014</div></div>
-      <div class="crow"><div class="cf">Transcendence</div><div class="crl">FX TD - Double Negative</div><div class="cy">2014</div></div>
-      <div class="crow"><div class="cf">Thor: The Dark World</div><div class="crl">FX TD - Double Negative</div><div class="cy">2013</div></div>
-      <div class="crow"><div class="cf">Maleficent</div><div class="crl">Lighting TD - MPC</div><div class="cy">2014</div></div>
-      <div class="crow"><div class="cf">300: Rise of an Empire</div><div class="crl">Lighting TD - MPC</div><div class="cy">2014</div></div>
-      <div class="crow"><div class="cf">Percy Jackson: Sea of Monsters</div><div class="crl">Lighting TD - MPC</div><div class="cy">2013</div></div>
-      <div class="crow"><div class="cf">World War Z</div><div class="crl">Lighting TD - MPC</div><div class="cy">2013</div></div></div></div>
+  <span class="label">Filmography</span>
+  <div class="poster-grid">
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar" loading="lazy"><div class="poster-overlay"><div class="poster-title">Interstellar</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2014</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg" alt="Spider-Man: No Way Home" loading="lazy"><div class="poster-overlay"><div class="poster-title">Spider-Man: No Way Home</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2021</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg" alt="Black Widow" loading="lazy"><div class="poster-overlay"><div class="poster-title">Black Widow</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2021</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/sv1xJUazXeYqALzczSZ3O6nkH75.jpg" alt="Black Panther: Wakanda Forever" loading="lazy"><div class="poster-overlay"><div class="poster-title">Black Panther: Wakanda Forever</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2022</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/vqzNJRH4YyquRiWxCCOH0aXggHI.jpg" alt="Terminator: Dark Fate" loading="lazy"><div class="poster-overlay"><div class="poster-title">Terminator: Dark Fate</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2019</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/NNxYkU70HPurnNCSiCjYAmacwm.jpg" alt="Mission Impossible - Dead Reckoning" loading="lazy"><div class="poster-overlay"><div class="poster-title">Mission Impossible - Dead Reckoning</div><div class="poster-role">FX TD - Belo FX</div><div class="poster-year">2023</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/4Tom6dDzBKqY8wyMRnGjlHxqCNn.jpg" alt="Spider-Man: Far From Home" loading="lazy"><div class="poster-overlay"><div class="poster-title">Spider-Man: Far From Home</div><div class="poster-role">FX TD - Image Engine</div><div class="poster-year">2019</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg" alt="Thor: Ragnarok" loading="lazy"><div class="poster-overlay"><div class="poster-title">Thor: Ragnarok</div><div class="poster-role">FX TD - Image Engine</div><div class="poster-year">2017</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/aabrLXpb6FwnHjGPJm0rOWA4PJu.jpg" alt="Godzilla" loading="lazy"><div class="poster-overlay"><div class="poster-title">Godzilla</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2014</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/ziEGdFvOfMAdJ1i4IMADTorSpnR.jpg" alt="John Wick 3" loading="lazy"><div class="poster-overlay"><div class="poster-title">John Wick 3</div><div class="poster-role">FX TD - Image Engine</div><div class="poster-year">2019</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/1BIoJGKbXjdFDAqUEiA2VHqkK1Z.jpg" alt="Shang-Chi" loading="lazy"><div class="poster-overlay"><div class="poster-title">Shang-Chi</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2021</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/6JjfSchsU6daXk2AKX8EEBjO3Fm.jpg" alt="Morbius" loading="lazy"><div class="poster-overlay"><div class="poster-title">Morbius</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2022</div></div></div>
+  </div>
+  <button class="expand-btn" id="expandCredits">Show more credits &#8595;</button>
+  <div id="fullCredits">
+    <div class="poster-grid" style="margin-top:1rem">
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/rULWuutDcN5NvtiZi4FRPzRYWSh.jpg" alt="Madame Web" loading="lazy"><div class="poster-overlay"><div class="poster-title">Madame Web</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2024</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/9z4hRkJ2pNVMOIFRE4UYhMgCBBf.jpg" alt="Avatar: The Last Airbender" loading="lazy"><div class="poster-overlay"><div class="poster-title">Avatar: The Last Airbender</div><div class="poster-role">FX TD - Outpost VFX</div><div class="poster-year">2023</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/mztdt2WPCBoyOEIhdTLJHSB4TE2.jpg" alt="The Acolyte" loading="lazy"><div class="poster-overlay"><div class="poster-title">The Acolyte</div><div class="poster-role">FX TD - Belo FX</div><div class="poster-year">2023</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/fiVW06jE7z9YnO4trhaMEdclSiC.jpg" alt="Fast X" loading="lazy"><div class="poster-overlay"><div class="poster-title">Fast X</div><div class="poster-role">FX TD - Belo FX</div><div class="poster-year">2023</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/3zXceNTtyj5FLjwQXuPvLYK5YYL.jpg" alt="Black Adam" loading="lazy"><div class="poster-overlay"><div class="poster-title">Black Adam</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2022</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/9kg73Mg8WJKlB9Y2SAJzeDKAnuB.jpg" alt="Chaos Walking" loading="lazy"><div class="poster-overlay"><div class="poster-title">Chaos Walking</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2021</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg" alt="Spider-Man: Homecoming" loading="lazy"><div class="poster-overlay"><div class="poster-title">Spider-Man: Homecoming</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2017</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/dImWM7GJqryWJO9LHa3XQ8DD5NH.jpg" alt="Fast and Furious 8" loading="lazy"><div class="poster-overlay"><div class="poster-title">Fast and Furious 8</div><div class="poster-role">FX TD - Digital Domain</div><div class="poster-year">2017</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/fLsaFKExQt05ioMXnGsSmYPFGBx.jpg" alt="Fantastic Beasts" loading="lazy"><div class="poster-overlay"><div class="poster-title">Fantastic Beasts</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2016</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/mLrQMqyZgLeP8FrT5LCobKAiqmK.jpg" alt="Star Trek Beyond" loading="lazy"><div class="poster-overlay"><div class="poster-title">Star Trek Beyond</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2016</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/gJnQ40b7j6Fi0bHDYfhFOiMNBv.jpg" alt="The Huntsman" loading="lazy"><div class="poster-overlay"><div class="poster-title">The Huntsman</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2016</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/5Cs5FXq0FMSPgKDPsAPkDAH6sNx.jpg" alt="Alice Through the Looking Glass" loading="lazy"><div class="poster-overlay"><div class="poster-title">Alice Through the Looking Glass</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2016</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/gjAFM4xhA5vyLxxKMz38ujlUfDL.jpg" alt="Hotel Transylvania 3" loading="lazy"><div class="poster-overlay"><div class="poster-title">Hotel Transylvania 3</div><div class="poster-role">FX TD - Sony Imageworks</div><div class="poster-year">2018</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/fBnQOtbkuIRK27HjmBZnaSiM95J.jpg" alt="Pan" loading="lazy"><div class="poster-overlay"><div class="poster-title">Pan</div><div class="poster-role">FX TD - MPC</div><div class="poster-year">2015</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/8sKm7GHSuMqunCCcFPLQUgkau5V.jpg" alt="Goosebumps" loading="lazy"><div class="poster-overlay"><div class="poster-title">Goosebumps</div><div class="poster-role">FX TD - MPC</div><div class="poster-year">2015</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/aMEsvTUklw3kS7VGrZT6sZcEDSQ.jpg" alt="Jupiter Ascending" loading="lazy"><div class="poster-overlay"><div class="poster-title">Jupiter Ascending</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2015</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/9uwMHbnkJQjBPwSFVqATJI4tXfA.jpg" alt="Transcendence" loading="lazy"><div class="poster-overlay"><div class="poster-title">Transcendence</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2014</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/wp4BmSXdMM1WUbigbfnVP6Ievci.jpg" alt="Thor: The Dark World" loading="lazy"><div class="poster-overlay"><div class="poster-title">Thor: The Dark World</div><div class="poster-role">FX TD - Double Negative</div><div class="poster-year">2013</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/k2wBpBiUWHhlDqWOu6wPZBdRbpK.jpg" alt="Maleficent" loading="lazy"><div class="poster-overlay"><div class="poster-title">Maleficent</div><div class="poster-role">Lighting TD - MPC</div><div class="poster-year">2014</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/1Ooh9IvdPLDJkpAMjfBPITzVol3.jpg" alt="300: Rise of an Empire" loading="lazy"><div class="poster-overlay"><div class="poster-title">300: Rise of an Empire</div><div class="poster-role">Lighting TD - MPC</div><div class="poster-year">2014</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/fu7JBNabEbwpSZfxDKDMBr55s2K.jpg" alt="Percy Jackson: Sea of Monsters" loading="lazy"><div class="poster-overlay"><div class="poster-title">Percy Jackson: Sea of Monsters</div><div class="poster-role">Lighting TD - MPC</div><div class="poster-year">2013</div></div></div>
+<div class="poster-card reveal"><img src="https://image.tmdb.org/t/p/w300/1SWBSYJsnyhdNRMFBcMSAWMq98q.jpg" alt="World War Z" loading="lazy"><div class="poster-overlay"><div class="poster-title">World War Z</div><div class="poster-role">Lighting TD - MPC</div><div class="poster-year">2013</div></div></div>
+    </div>
+  </div>
+  <p class="tmdb-attr">Poster images provided by <a href="https://www.themoviedb.org" target="_blank">TMDB</a></p>
+  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+    <span class="label" style="margin-bottom:1rem;display:block">Additional Credits</span>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+      <span class="tag">Behemoth (2026) - Digital Domain</span>
+      <span class="tag">Street Fighter (2026) - Digital Domain</span>
+      <span class="tag">Kalki (2025) - Embassy VFX</span>
+      <span class="tag">My Lady Jane (2023) - Belo FX</span>
+      <span class="tag">Lost in Space 3 (2021) - Digital Domain</span>
+      <span class="tag">The Rescue (2020) - Digital Domain</span>
+      <span class="tag">Game Cinematics (2019) - Goldtooth Creative</span>
+      <span class="tag">Kingdom Hearts 3 (2019) - Image Engine</span>
+    </div>
+  </div>
 </div></section>
+
 <section class="ts">
   <span class="label">Technical Toolkit</span>
   <div class="tg">
@@ -182,6 +203,7 @@ body.light img.sec-img,body.light img.si{border-color:rgba(0,0,0,0.1)}
   <a href="https://www.imdb.com/name/nm6035150/" target="_blank" class="btn btn-arrow">View on IMDb</a>
 </section>
 <div class="divider"></div>
+
 <footer class="site-footer">
   <span class="footer-copy">&copy; 2026 Tosin Akinwoye</span>
   <div class="footer-links">
@@ -195,41 +217,32 @@ document.addEventListener('DOMContentLoaded',()=>{
   const t=document.querySelector('.nav-toggle'),l=document.querySelector('.nav-links');
   if(t&&l){t.addEventListener('click',()=>l.classList.toggle('open'));l.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>l.classList.remove('open')))}
   const r=document.querySelectorAll('.reveal');
-  if(r.length&&'IntersectionObserver'in window){const o=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){n.target.classList.add('visible');o.unobserve(n.target)}})},{threshold:0.1});r.forEach(e=>o.observe(e))}else{r.forEach(e=>e.classList.add('visible'))}
-  // Lazy load iframes
-  document.querySelectorAll('iframe[data-src]').forEach(f=>{
-    const o=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){f.src=f.dataset.src;o.unobserve(f)}})},{threshold:0.1});o.observe(f)
-  });
-  // Expand filmography
+  if(r.length&&'IntersectionObserver'in window){const o=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){n.target.classList.add('visible');o.unobserve(n.target)}});},{threshold:0.1});r.forEach(e=>o.observe(e))}else{r.forEach(e=>e.classList.add('visible'))}
   const eb=document.getElementById('expandCredits');
   if(eb){eb.addEventListener('click',()=>{document.getElementById('fullCredits').style.display='block';eb.style.display='none'})}
 });
-
-// Theme toggle
 (function(){
-  var saved = null;
-  try { saved = localStorage.getItem('theme'); } catch(e){}
-  if(saved === 'light') document.body.classList.add('light');
-  
-  document.addEventListener('DOMContentLoaded', function(){
-    var btn = document.querySelector('.theme-toggle');
+  var saved=null;
+  try{saved=localStorage.getItem('theme')}catch(e){}
+  if(saved==='light')document.body.classList.add('light');
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.querySelector('.theme-toggle');
     if(btn){
       updateIcon();
-      btn.addEventListener('click', function(){
+      btn.addEventListener('click',function(){
         document.body.classList.toggle('light');
-        try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch(e){}
+        try{localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark')}catch(e){}
         updateIcon();
       });
     }
     function updateIcon(){
-      var btn = document.querySelector('.theme-toggle');
-      if(!btn) return;
-      var isLight = document.body.classList.contains('light');
-      btn.innerHTML = isLight ? '<span class="theme-toggle-icon">&#9790;</span> Dark' : '<span class="theme-toggle-icon">&#9788;</span> Light';
+      var btn=document.querySelector('.theme-toggle');
+      if(!btn)return;
+      var isLight=document.body.classList.contains('light');
+      btn.innerHTML=isLight?'<span class="theme-toggle-icon">&#9790;</span> Dark':'<span class="theme-toggle-icon">&#9788;</span> Light';
     }
   });
 })();
-
 </script>
 </body>
 </html>
